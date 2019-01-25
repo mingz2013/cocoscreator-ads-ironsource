@@ -1,23 +1,11 @@
 package me.mingz.ads;
 
-import android.app.Activity;
-
 import org.cocos2dx.lib.Cocos2dxActivity;
-import org.cocos2dx.lib.Cocos2dxJavascriptJavaBridge;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class AdsPlugin {
 
-    public static AdsPlugin mInstace = null;
-
-    public static AdsPlugin getInstance() {
-        if (null == mInstace){
-            mInstace = new AdsPlugin();
-
-        }
-        return mInstace;
-    }
 
 
 
@@ -25,6 +13,10 @@ public class AdsPlugin {
 
     public AdsPlugin() {
 
+    }
+
+    public Cocos2dxActivity getActivity() {
+        return mActivity;
     }
 
 
@@ -59,12 +51,7 @@ public class AdsPlugin {
     }
 
 
-    public void setActivity(Cocos2dxActivity activity){
-        this.mActivity = activity;
-    }
-    public Cocos2dxActivity getActivity() {
-        return mActivity;
-    }
+
 
     public void emitWindowEvent(final String event) {
         this.emitWindowEvent(event, new JSONObject());

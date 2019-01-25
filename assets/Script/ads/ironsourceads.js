@@ -295,7 +295,7 @@ var IronSourceAds = (function () {
 
 
 /**
- * Helper function to call cordova plugin
+ * Helper function to call plugin
  * @param {String} action - function name to call
  * @param {Object} params - optional params
  * @param {Function} onSuccess - optional on sucess function

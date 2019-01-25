@@ -1,7 +1,6 @@
 package me.mingz.ads;
 
-import android.app.Activity;
-import android.content.Intent;
+
 import android.os.Bundle;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
@@ -14,48 +13,48 @@ public class AdsActivity extends Cocos2dxActivity {
 
 
 
-        AdsPlugin.getInstance().init(this);
+        AdsPluginManager.getInstance().init(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        AdsPlugin.getInstance().onStart();
+        AdsPluginManager.getInstance().onStart();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        AdsPlugin.getInstance().onStop();
+        AdsPluginManager.getInstance().onStop();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        AdsPlugin.getInstance().onResume();
+        AdsPluginManager.getInstance().onResume();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
 
-        AdsPlugin.getInstance().onRestart();
+        AdsPluginManager.getInstance().onRestart();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        AdsPlugin.getInstance().onPause();
+        AdsPluginManager.getInstance().onPause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        AdsPlugin.getInstance().onDestroy();
+        AdsPluginManager.getInstance().onDestroy();
     }
 
 }

@@ -6,10 +6,16 @@ import org.json.JSONObject;
 
 public class JsbCall {
 
-    public static void exec(String action, String params, String callbackId) {
+    public static void exec(String service, String action, String params, String callbackId) {
         final CallbackContext callbackContext = new CallbackContext(callbackId);
         try{
-            JsbCall.exec(action, new JSONObject(params), callbackContext);
+            boolean ret = JsbCall.exec(service, action, new JSONObject(params), callbackContext);
+//            if(ret){
+//                callbackContext.success("");
+//            }else{
+//                callbackContext.failure("");
+//            }
+
         }catch (JSONException e){
             callbackContext.failure(String.format("params to json or params error, params: %s", params));
         }
@@ -18,10 +24,14 @@ public class JsbCall {
 
 
 
-    private static void exec(String action, JSONObject args, final CallbackContext callbackContext) throws JSONException{
-        AdsPlugin.getInstance().exec(action, args, callbackContext);
+    private static boolean exec(String service, String action, JSONObject args, final CallbackContext callbackContext) throws JSONException{
+
+        return AdsPluginManager.getInstance().exec(service, action, args, callbackContext);
+
 
     }
+
+
 
 
 

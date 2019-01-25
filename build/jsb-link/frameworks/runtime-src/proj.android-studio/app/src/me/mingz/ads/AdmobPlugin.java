@@ -42,8 +42,5 @@ public class AdmobPlugin extends AdsPlugin {
         super.onStop();
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
+
 }

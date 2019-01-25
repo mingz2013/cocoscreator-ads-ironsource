@@ -154,11 +154,6 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
     }
 
 
-    public IronsourcePlugin() {
-        super();
-    }
-
-
 
 
     @Override
@@ -720,11 +715,7 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
     }
 
 
-//
-//    public Activity getActivity() {
-//        Log.d(TAG, "getActivity: ");
-//        return cordova.getActivity();
-//    }
+
 
     private void showBanner(final int argPos, final int argX, final int argY) {
         Log.d(TAG, "showBanner: ......." + argPos + " " + argX + " " + argY);

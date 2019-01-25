@@ -1,5 +1,6 @@
 package me.mingz.ads;
 
+
 public class CallbackContext {
 
     private String mCallbackId = null;
@@ -8,12 +9,12 @@ public class CallbackContext {
     }
 
     public void success(String params){
-
+        JsbCall.successCall(mCallbackId, params);
     }
 
 
     public void failure(String params){
-
+        JsbCall.failureCall(mCallbackId, params);
     }
 
 
