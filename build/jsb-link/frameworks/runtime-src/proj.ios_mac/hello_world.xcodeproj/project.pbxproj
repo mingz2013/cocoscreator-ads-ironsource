@@ -49,6 +49,7 @@
 		76AFC25321FB0FEF0018A6F3 /* AdsPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AFC25221FB0FEF0018A6F3 /* AdsPlugin.m */; };
 		76AFC25621FB13270018A6F3 /* AdsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AFC25521FB13270018A6F3 /* AdsViewController.m */; };
 		76AFC25921FB13D70018A6F3 /* AdsPluginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AFC25721FB13D70018A6F3 /* AdsPluginManager.m */; };
+		76AFC25C21FB16C50018A6F3 /* JsbCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AFC25B21FB16C50018A6F3 /* JsbCall.m */; };
 		A92275421517C094001B78AA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275411517C094001B78AA /* QuartzCore.framework */; };
 		A92275441517C094001B78AA /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275431517C094001B78AA /* OpenGLES.framework */; };
 		A92275461517C094001B78AA /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275451517C094001B78AA /* OpenAL.framework */; };
@@ -154,6 +155,8 @@
 		76AFC25521FB13270018A6F3 /* AdsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdsViewController.m; path = ios/AdsViewController.m; sourceTree = "<group>"; };
 		76AFC25721FB13D70018A6F3 /* AdsPluginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdsPluginManager.m; path = ios/AdsPluginManager.m; sourceTree = "<group>"; };
 		76AFC25821FB13D70018A6F3 /* AdsPluginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdsPluginManager.h; path = ios/AdsPluginManager.h; sourceTree = "<group>"; };
+		76AFC25A21FB16600018A6F3 /* JsbCall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JsbCall.h; path = ios/JsbCall.h; sourceTree = "<group>"; };
+		76AFC25B21FB16C50018A6F3 /* JsbCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JsbCall.m; path = ios/JsbCall.m; sourceTree = "<group>"; };
 		A922753D1517C094001B78AA /* hello_world-mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "hello_world-mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92275411517C094001B78AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A92275431517C094001B78AA /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -344,6 +347,8 @@
 		D45446CC156DE73F00887EB5 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				76AFC25A21FB16600018A6F3 /* JsbCall.h */,
+				76AFC25B21FB16C50018A6F3 /* JsbCall.m */,
 				76AFC25821FB13D70018A6F3 /* AdsPluginManager.h */,
 				76AFC25721FB13D70018A6F3 /* AdsPluginManager.m */,
 				76AFC25121FB0F7E0018A6F3 /* AdsPlugin.h */,
@@ -519,6 +524,7 @@
 				76AFC25321FB0FEF0018A6F3 /* AdsPlugin.m in Sources */,
 				D4545227156E28EF00887EB5 /* AppDelegate.cpp in Sources */,
 				509D4AC817EBB2AB00697056 /* main.m in Sources */,
+				76AFC25C21FB16C50018A6F3 /* JsbCall.m in Sources */,
 				76AFC25621FB13270018A6F3 /* AdsViewController.m in Sources */,
 				76AFC24E21FB0D8D0018A6F3 /* AdMobPlugin.m in Sources */,
 				509D4ABC17EBB2AB00697056 /* AppController.mm in Sources */,
