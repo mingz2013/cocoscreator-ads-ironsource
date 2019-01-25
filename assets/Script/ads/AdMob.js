@@ -353,23 +353,26 @@ AdMob.hideBanner = function (params) {
 
 
 /**
- * Helper function to call cordova plugin
+ * Helper function to call  plugin
  * @param {String} name - function name to call
  * @param {Object} params - optional params
  * @param {Function} onSuccess - optional on sucess function
  * @param {Function} onFailure - optional on failure functioin
  */
-function callPlugin(name, params, onSuccess, onFailure) {
-    cordova.exec(function callPluginSuccess(result) {
+function callPlugin(action, params, onSuccess, onFailure) {
+    JsbNativeCall.exec('IronsourcePlugin',
+        action, params,
+        function callPluginSuccess(result) {
 
-        if (isFunction(onSuccess)) {
-            onSuccess(result);
-        }
-    }, function callPluginFailure(error) {
-        if (isFunction(onFailure)) {
-            onFailure(error)
-        }
-    }, 'AdMobPlugin', name, [params]);
+            if (isFunction(onSuccess)) {
+                onSuccess(result);
+            }
+        },
+        function callPluginFailure(error) {
+            if (isFunction(onFailure)) {
+                onFailure(error)
+            }
+        });
 }
 
 

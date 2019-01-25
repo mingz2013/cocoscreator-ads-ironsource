@@ -35,7 +35,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 
-public class AppActivity extends Cocos2dxActivity {
+import me.mingz.ads.AdsActivity;
+
+public class AppActivity extends AdsActivity {//Cocos2dxActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

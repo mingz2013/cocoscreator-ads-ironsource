@@ -1,4 +1,4 @@
-var logManager = require('../sdk_log');
+// var logManager = require('../sdk_log');
 var config = require('../sdk_config');
 // var bi = require('../sdk_bi');
 
@@ -6,6 +6,10 @@ var config = require('../sdk_config');
 var showlog = function (msg) {
     console.log(msg);
 };
+
+var showerror = function (msg) {
+    console.log(msg);
+}
 
 var AdMobObj = function (adsConfig) {
     showlog("AdMobObj.init........");
@@ -176,7 +180,7 @@ AdMobObj.prototype._listen = function () {
                     }
 
                 } catch (e) {
-                    logManager.LOGE("onAdDismiss...", info['adType'], JSON.stringify(e));
+                    showerror("onAdDismiss...", info['adType'], JSON.stringify(e));
                 }
 
                 this._interstitialAdStatus = this._AdStatus_Enum.dismiss;
@@ -194,7 +198,7 @@ AdMobObj.prototype._listen = function () {
                         this._rewardVideoFailCallback && this._rewardVideoFailCallback();
                     }
                 } catch (e) {
-                    logManager.LOGE("onAdDismiss...", info['adType'], JSON.stringify(e));
+                    showerror("onAdDismiss...", info['adType'], JSON.stringify(e));
                 }
                 this._rewardVideoAdStatus = this._AdStatus_Enum.dismiss;
                 this._rewardVideoSuccessCallback = null;

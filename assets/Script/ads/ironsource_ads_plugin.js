@@ -1,10 +1,3 @@
-/**
- *
- *
- *https://github.com/mingz2013/cordova-plugin-ironsource-ads
- *
- *
- * */
 
 
 var log = require('../sdk_log');
@@ -12,6 +5,10 @@ var log = require('../sdk_log');
 var config = require('../sdk_config');
 
 var showlog = function (message) {
+    cc.log("<IronSourceAdsPlugin>------------", message);
+};
+
+var showerror = function (message) {
     cc.log("<IronSourceAdsPlugin>------------", message);
 };
 
@@ -42,7 +39,7 @@ var IronSourceAdsPlugin = function (config) {
 
 IronSourceAdsPlugin.prototype.init = function () {
     window['IronSourceAds']['init']({
-        "appKey": cordova.platformId === 'ios' ? this.config.IOS_KEY : this.config.ANDROID_KEY,
+        "appKey": platformId === 'ios' ? this.config.IOS_KEY : this.config.ANDROID_KEY,
         "userId": this.config.userId,
         "debug": this.config.isDebug,
         "onSuccess": function () {
@@ -64,7 +61,7 @@ IronSourceAdsPlugin.prototype.init = function () {
                 try {
                     this._rewardVideoFailureCallback && this._rewardVideoFailureCallback();
                 } catch (e) {
-                    log.LOGE(e);
+                    showerror(e);
                 }
 
                 this._rewardVideoFailureCallback = null;
@@ -97,7 +94,7 @@ IronSourceAdsPlugin.prototype.init = function () {
                     try {
                         this._rewardVideoSuccessCallback && this._rewardVideoSuccessCallback();
                     } catch (e) {
-                        log.LOGE(e);
+                        showerror(e);
                     }
                     this._rewardVideoSuccessCallback = null;
                 } else {
@@ -106,7 +103,7 @@ IronSourceAdsPlugin.prototype.init = function () {
                     try {
                         this._rewardVideoFailureCallback && this._rewardVideoFailureCallback();
                     } catch (e) {
-                        log.LOGE(e);
+                        showerror(e);
                     }
                     this._rewardVideoFailureCallback = null;
                 }
@@ -133,7 +130,7 @@ IronSourceAdsPlugin.prototype.init = function () {
                 try {
                     this._interstitialFailureCallback && this._interstitialFailureCallback();
                 } catch (e) {
-                    log.LOGE(e);
+                    showerror(e);
                 }
                 this._interstitialFailureCallback = null;
 
@@ -149,7 +146,7 @@ IronSourceAdsPlugin.prototype.init = function () {
                     try {
                         this._interstitialSuccessCallback && this._interstitialSuccessCallback();
                     } catch (e) {
-                        log.LOGE(e);
+                        showerror(e);
                     }
                     this._interstitialSuccessCallback = null;
                 } else {
@@ -158,7 +155,7 @@ IronSourceAdsPlugin.prototype.init = function () {
                     try {
                         this._interstitialFailureCallback && this._interstitialFailureCallback();
                     } catch (e) {
-                        log.LOGE(e);
+                        showerror(e);
                     }
                     this._interstitialFailureCallback = null;
                 }
@@ -180,7 +177,7 @@ IronSourceAdsPlugin.prototype.init = function () {
                     try {
                         this._offerwallSuccessCallback && this._offerwallSuccessCallback();
                     } catch (e) {
-                        log.LOGE(e);
+                        showerror(e);
                     }
                     this._offerwallSuccessCallback = null;
                 } else {
@@ -189,7 +186,7 @@ IronSourceAdsPlugin.prototype.init = function () {
                     try {
                         this._offerwallFailureCallback && this._offerwallFailureCallback();
                     } catch (e) {
-                        log.LOGE(e);
+                        showerror(e);
                     }
                     this._offerwallFailureCallback = null;
                 }
@@ -202,7 +199,7 @@ IronSourceAdsPlugin.prototype.init = function () {
                 try {
                     this._offerwallFailureCallback && this._offerwallFailureCallback();
                 } catch (e) {
-                    log.LOGE(e);
+                    showerror(e);
                 }
                 this._offerwallFailureCallback = null;
             }.bind(this));
@@ -217,7 +214,7 @@ IronSourceAdsPlugin.prototype.init = function () {
                 try {
                     this._offerwallFailureCallback && this._offerwallFailureCallback();
                 } catch (e) {
-                    log.LOGE(e);
+                    showerror(e);
                 }
                 this._offerwallFailureCallback = null;
             }.bind(this));

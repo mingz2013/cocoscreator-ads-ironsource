@@ -1,24 +1,20 @@
-/**
- *
- *
- * 广告策略，目前，只针对cordova里的插件，也就是原生app。
- *
- * 目前只有 admob，fbads
- *
- *
- * */
-
-
-
-
 var config = require('../sdk_config');
-let logManager = require('../sdk_log');
+// let logManager = require('../sdk_log');
 
-var AdMobObj = require('./cordova_plugin_admob');
-var FBAdsObj = require('./cordova_plugin_fbads');
+var AdMobObj = require('./admob_plugin');
+var FBAdsObj = require('./fbads_plugin');
+
+
+var showlog = function (msg) {
+    console.log(msg);
+};
+
+var showerror = function (msg) {
+    console.log(msg);
+};
 
 var AdPolicy = function () {
-    logManager.LOGD("AdPolicy.init.......");
+    showlog("AdPolicy.init.......");
 
     // banner 广告位置
     this.AD_POSITION_KEY_TOP_CENTER = 'TOP_CENTER';
@@ -33,7 +29,7 @@ var AdPolicy = function () {
 
 // Ads
 AdPolicy.prototype.showInterstitial = function (successCallback, failureCallback) {
-    logManager.LOGD("AdPolicy.showInterstitial....");
+    showlog("AdPolicy.showInterstitial....");
     return this._admob.showInterstitial(successCallback, function () {
         this._fbads.showInterstitial(successCallback, failureCallback);
     }.bind(this));
@@ -52,7 +48,7 @@ AdPolicy.prototype.hideBanner = function () {
 };
 
 AdPolicy.prototype.showRewardVideoAd = function (successCallback, failureCallback) {
-    logManager.LOGD("AdPolicy.showRewardVideoAd....");
+    showlog("AdPolicy.showRewardVideoAd....");
     return this._admob.showRewardVideoAd(successCallback, function () {
         this._fbads.showRewardVideoAd(successCallback, failureCallback)
     }.bind(this));
@@ -60,7 +56,7 @@ AdPolicy.prototype.showRewardVideoAd = function (successCallback, failureCallbac
 
 
 AdPolicy.prototype.showAdsWithPolicy = function (successCallback, failureCallback) {
-    logManager.LOGD("AdPolicy.showAdsWithPolicy....");
+    showlog("AdPolicy.showAdsWithPolicy....");
     this.showRewardVideoAd(successCallback, function () {
         this.showInterstitial(successCallback, failureCallback);
     }.bind(this));

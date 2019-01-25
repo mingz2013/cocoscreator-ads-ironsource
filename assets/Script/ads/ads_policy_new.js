@@ -1,14 +1,3 @@
-/**
- *
- *
- * 广告策略，目前，只针对cordova里的插件，也就是原生app。
- *
- * 目前只有 admob，fbads
- *
- *
- * */
-
-
 
 
 var config = require('../sdk_config');
