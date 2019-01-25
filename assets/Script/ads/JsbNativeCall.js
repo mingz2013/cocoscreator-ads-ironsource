@@ -61,28 +61,28 @@ window.JsbNativeCall = (function () {
 
     }
 
-    function _exec(action, params, callbackContext) {
-        jsb.reflection.callStaticMethod("me.mingz.ads.JsbCall", "exec", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V", action, params, callbackContext.callbackId);
+
+    function _exec(service, action, params, callbackId) {
+        jsb.reflection.callStaticMethod("me.mingz.ads.JsbCall", "exec", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V", service, action, params, callbackId);
 
     }
 
-
     /**
      * exec Native method Call
+     * @param {string} service
      * @param {string} action
      * @param {Object} params
      * @param {function} success
      * @param {function} failure
      */
-    function exec(action, params, success, failure) {
+    function exec(service, action, params, success, failure) {
 
         var callbackContext = newCallBackContext(success, failure);
         setCallbackContext(callbackContext);
 
-        _exec(action, JSON.stringify(params), callbackContext)
-
-
+        _exec(service, action, JSON.stringify(params), callbackContext.callbackId);
     }
+
 
 
     function callBackCallSuccess(callbackId, params) {

@@ -29,7 +29,9 @@ var IronSourceAds = (function () {
         /**
          * Sets the user id, used for Offerwall ad units or using
          * server-to-server callbacks to reward your users with our rewarded ad units
-         * @param {String} - user id
+         * @param {String} params.userId user id
+         * @param {Function} params.onSuccess - optional on success callback
+         * @param {Function} params.onFailure - optional on failure callback
          */
         setDynamicUserId: function setUserId(params) {
 
@@ -39,7 +41,7 @@ var IronSourceAds = (function () {
                 throw new Error("IronSourceAds::setUserId - missing userId IronSourceAds.setUserId({userId:'example'})");
             }
 
-            callPlugin('setDynamicUserId', [params.userId], params.onSuccess, params.onFailure);
+            callPlugin('setDynamicUserId', {userId: params.userId}, params.onSuccess, params.onFailure);
         },
 
         /**
@@ -56,7 +58,7 @@ var IronSourceAds = (function () {
                 throw new Error("IronSourceAds::setConsent - missing consent IronSourceAds.setConsent({consent:true})");
             }
 
-            callPlugin('setConsent', [params.consent], params.onSuccess, params.onFailure);
+            callPlugin('setConsent', {consent: params.consent}, params.onSuccess, params.onFailure);
         },
 
         /**
@@ -68,7 +70,7 @@ var IronSourceAds = (function () {
 
             params = defaults(params, {});
 
-            callPlugin('validateIntegration', [], params.onSuccess, params.onFailure);
+            callPlugin('validateIntegration', {}, params.onSuccess, params.onFailure);
 
         },
 
@@ -94,7 +96,16 @@ var IronSourceAds = (function () {
                 throw new Error('IronSourceAds::init - appKey is required');
             }
 
-            callPlugin('init', [params.appKey, params.userId, params.debug, params.position, params.x, params.y, params.w, params.h], function () {
+            callPlugin('init', {
+                appKey: params.appKey,
+                userId: params.userId,
+                debug: params.debug,
+                position: params.position,
+                x: params.x,
+                y: params.y,
+                w: params.w,
+                h: params.h
+            }, function () {
 
                 initialized = true;
 
@@ -117,7 +128,7 @@ var IronSourceAds = (function () {
 
             params = defaults(params, {placement: 'DefaultRewardedVideo'});
 
-            callPlugin('showRewardedVideo', [params.placement], params.onSuccess, params.onFailure);
+            callPlugin('showRewardedVideo', {placement: params.placement}, params.onSuccess, params.onFailure);
 
         },
 
@@ -125,6 +136,7 @@ var IronSourceAds = (function () {
         /**
          * Checks if rewarded video is available
          * @param {Function} params.onSuccess - function to call the result to
+         * @param {Function} params.onFailure - optional on failure callback
          */
         hasRewardedVideo: function hasRewardedVideo(params) {
 
@@ -134,7 +146,7 @@ var IronSourceAds = (function () {
                 throw new Error('IronSourceAdsPlugin::hasRewardedVideo expects onSuccess');
             }
 
-            callPlugin('hasRewardedVideo', [], params.onSuccess, params.onFailure);
+            callPlugin('hasRewardedVideo', {}, params.onSuccess, params.onFailure);
 
         },
 
@@ -142,6 +154,7 @@ var IronSourceAds = (function () {
         /**
          * load banner if avaialble
          * @param {string} params.placement
+         * @param {string} params.size
          * @param {string} params.position
          * @param {Function} params.onSuccess
          * @param {Function} params.onFailure
@@ -150,22 +163,26 @@ var IronSourceAds = (function () {
             console.log("loadBanner....", params);
             params = defaults(params, {placement: 'DefaultBanner', position: 'bottom', size: 'standard'});
 
-            callPlugin('loadBanner', [params.placement, params.size, params.position], params.onSuccess, params.onFailure);
+            callPlugin('loadBanner', {
+                placement: params.placement,
+                size: params.size,
+                position: params.position
+            }, params.onSuccess, params.onFailure);
 
         },
 
 
         /**
          * Shows banner if avaialble
-         // * @params {string} params.placement
-         // * @params {string} params.position
-         * @params {int} params.position   AD_POSITION
-         * @params {int} params.x
-         * @params {int} params.y
-         //         * @params {int} params.w
-         //         * @params {int} params.h
-         * @params {Function} params.onSuccess
-         * @params {Function} params.onFailure
+         // * @param {string} params.placement
+         // * @param {string} params.position
+         * @param {int} params.position   AD_POSITION
+         * @param {int} params.x
+         * @param {int} params.y
+         //         * @param {int} params.w
+         //         * @param {int} params.h
+         * @param {Function} params.onSuccess
+         * @param {Function} params.onFailure
          */
         showBanner: function showBanner(params) {
             console.log("showBanner....", params);
@@ -173,7 +190,11 @@ var IronSourceAds = (function () {
 
             params = defaults(params, {position: 0, x: 0, y: 0});
 
-            callPlugin('showBanner', [params.position, params.x, params.y], params.onSuccess, params.onFailure);
+            callPlugin('showBanner', {
+                position: params.position,
+                x: params.x,
+                y: params.y
+            }, params.onSuccess, params.onFailure);
 
         },
 
@@ -186,7 +207,7 @@ var IronSourceAds = (function () {
             console.log("hideBanner....", params);
             params = defaults(params, {});
 
-            callPlugin('hideBanner', [], params.onSuccess, params.onFailure);
+            callPlugin('hideBanner', {}, params.onSuccess, params.onFailure);
 
         },
 
@@ -200,12 +221,13 @@ var IronSourceAds = (function () {
 
             params = defaults(params, {});
 
-            callPlugin('hasOfferwall', [], params.onSuccess, params.onFailure);
+            callPlugin('hasOfferwall', {}, params.onSuccess, params.onFailure);
         },
 
 
         /**
          * Shows the offerwall if available
+         * @param {string} params.placement
          * @param {Function} params.onSuccess
          * @param {Function} params.onFailure
          */
@@ -213,7 +235,7 @@ var IronSourceAds = (function () {
 
             params = defaults(params, {placement: 'DefaultOfferWall'});
 
-            callPlugin('showOfferwall', [params.placement], params.onSuccess, params.onFailure);
+            callPlugin('showOfferwall', {placement: params.placement}, params.onSuccess, params.onFailure);
 
         },
 
@@ -225,7 +247,7 @@ var IronSourceAds = (function () {
 
             params = defaults(params, {});
 
-            callPlugin('loadInterstitial', [], params.onSuccess, params.onFailure);
+            callPlugin('loadInterstitial', {}, params.onSuccess, params.onFailure);
 
         },
 
@@ -237,7 +259,7 @@ var IronSourceAds = (function () {
 
             params = defaults(params, {placement: 'DefaultInterstitial'});
 
-            callPlugin('showInterstitial', [params.placement], params.onSuccess, params.onFailure);
+            callPlugin('showInterstitial', {placement: params.placement}, params.onSuccess, params.onFailure);
 
         },
 
@@ -251,7 +273,7 @@ var IronSourceAds = (function () {
 
             params = defaults(params, {});
 
-            callPlugin('hasInterstitial', [], params.onSuccess, params.onFailure);
+            callPlugin('hasInterstitial', {}, params.onSuccess, params.onFailure);
 
         },
 
@@ -264,7 +286,7 @@ var IronSourceAds = (function () {
 
             params = defaults(params, {placement: 'DefaultRewardedVideo'});
 
-            callPlugin('isRewardedVideoCappedForPlacement', [], params.onSuccess, params.onFailure);
+            callPlugin('isRewardedVideoCappedForPlacement', {placement: params.placement}, params.onSuccess, params.onFailure);
 
         }
 
@@ -274,22 +296,25 @@ var IronSourceAds = (function () {
 
 /**
  * Helper function to call cordova plugin
- * @param {String} name - function name to call
- * @param {Array} params - optional params
+ * @param {String} action - function name to call
+ * @param {Object} params - optional params
  * @param {Function} onSuccess - optional on sucess function
  * @param {Function} onFailure - optional on failure functioin
  */
-function callPlugin(name, params, onSuccess, onFailure) {
-    JsbNativeCall.exec(function callPluginSuccess(result) {
+function callPlugin(action, params, onSuccess, onFailure) {
+    JsbNativeCall.exec('IronSourceAdsPlugin',
+        action, params,
+        function callPluginSuccess(result) {
 
-        if (isFunction(onSuccess)) {
-            onSuccess(result);
-        }
-    }, function callPluginFailure(error) {
-        if (isFunction(onFailure)) {
-            onFailure(error)
-        }
-    }, 'IronSourceAdsPlugin', name, params);
+            if (isFunction(onSuccess)) {
+                onSuccess(result);
+            }
+        },
+        function callPluginFailure(error) {
+            if (isFunction(onFailure)) {
+                onFailure(error)
+            }
+        });
 }
 
 
