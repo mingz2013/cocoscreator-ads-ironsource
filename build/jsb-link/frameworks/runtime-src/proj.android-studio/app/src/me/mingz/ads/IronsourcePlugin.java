@@ -13,11 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaInterface;
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.PluginResult;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,12 +29,7 @@ import com.ironsource.mediationsdk.sdk.InterstitialListener;
 import com.ironsource.mediationsdk.sdk.OfferwallListener;
 import com.ironsource.mediationsdk.sdk.RewardedVideoListener;
 import com.ironsource.mediationsdk.sdk.BannerListener;
-import com.ironsource.mediationsdk.IronSource;
 
-
-import java.lang.reflect.Method;
-
-import android.graphics.Color;
 
 public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener, OfferwallListener, InterstitialListener {
     private final String FALLBACK_USER_ID = "userId";
@@ -110,7 +101,7 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
 
 
     @Override
-    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    public boolean exec(String action, JSONObject args, final CallbackContext callbackContext) throws JSONException{
 
         if (action.equals("init")) {
             this.initAction(args, callbackContext);
@@ -164,14 +155,11 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
 
 
     public IronsourcePlugin() {
-
+        super();
     }
 
 
-    @Override
-    protected void onCreate() {
-        super.onCreate();
-    }
+
 
     @Override
     protected void onDestroy() {
@@ -205,11 +193,6 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
         super.onStop();
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
 
     /**
      * ----------------------- UTILS ---------------------------
@@ -229,41 +212,23 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
         return data;
     }
 
-    private void emitWindowEvent(final String event) {
-        final CordovaWebView view = this.webView;
-        this.cordova.getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                view.loadUrl(String.format("javascript:cordova.fireWindowEvent('%s');", event));
-            }
-        });
-    }
 
-    private void emitWindowEvent(final String event, final JSONObject data) {
-        final CordovaWebView view = this.webView;
-        this.cordova.getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                view.loadUrl(String.format("javascript:cordova.fireWindowEvent('%s', %s);", event, data.toString()));
-            }
-        });
-    }
 
     /** ----------------------- INITIALIZATION --------------------------- */
 
     /**
      * Intilization action Initializes IronSource
      */
-    private void initAction(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    private void initAction(JSONObject args, final CallbackContext callbackContext) throws JSONException {
         Log.d(TAG, "initAction: ");
-        final String appKey = args.getString(0);
-        final String providedUserId = args.getString(1);
-        final Boolean isDebug = args.getBoolean(2);
-        final int position = args.getInt(3);
-        final int x = args.getInt(4);
-        final int y = args.getInt(5);
-        final int w = args.getInt(6);
-        final int h = args.getInt(7);
+        final String appKey = args.getString("appKey");
+        final String providedUserId = args.getString("providedUserId");
+        final Boolean isDebug = args.getBoolean("debug");
+        final int position = args.getInt("position");
+        final int x = args.getInt("x");
+        final int y = args.getInt("y");
+        final int w = args.getInt("w");
+        final int h = args.getInt("h");
         this.adPosition = position;
         this.posX = x;
         this.posY = y;
@@ -297,7 +262,7 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
 
                 // we're using an advertisingId as the 'userId'
                 init(appKey, userId, isDebug);
-                callbackContext.success();
+                callbackContext.success("");
 
             }
         };
@@ -329,7 +294,7 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
         IronSource.setUserId(userId);
 
         // init the IronSource SDK
-        IronSource.init(this.cordova.getActivity(), appKey);
+        IronSource.init(this.getActivity(), appKey);
 
         if (isDebug) {
             IronSource.setAdaptersDebug(true);
@@ -340,14 +305,14 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
      * ----------------------- SET DYNAMIC USER ID ---------------------------
      */
 
-    private void setDynamicUserIdAction(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    private void setDynamicUserIdAction(JSONObject args, final CallbackContext callbackContext) throws JSONException {
 
-        final String userId = args.getString(0);
+        final String userId = args.getString("userId");
 
         this.getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 IronSource.setDynamicUserId(userId);
-                callbackContext.success();
+                callbackContext.success("");
             }
         });
     }
@@ -356,14 +321,14 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
      * ----------------------- SET CONSENT ---------------------------
      */
 
-    private void setConsentAction(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    private void setConsentAction(JSONObject args, final CallbackContext callbackContext) throws JSONException {
 
-        final boolean consent = args.getBoolean(0);
+        final boolean consent = args.getBoolean("consent");
 
         this.getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 IronSource.setConsent(consent);
-                callbackContext.success();
+                callbackContext.success("");
             }
         });
     }
@@ -375,12 +340,12 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
     /**
      * Validates integration action
      */
-    private void validateIntegrationAction(JSONArray args, final CallbackContext callbackContext) {
+    private void validateIntegrationAction(JSONObject args, final CallbackContext callbackContext) {
         final IronsourcePlugin self = this;
         this.getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 IntegrationHelper.validateIntegration(self.getActivity());
-                callbackContext.success();
+                callbackContext.success("");
             }
         });
     }
@@ -389,37 +354,37 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
      * ----------------------- REWARDED VIDEO ---------------------------
      */
 
-    private void showRewardedVideoAction(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    private void showRewardedVideoAction(JSONObject args, final CallbackContext callbackContext) throws JSONException {
 
-        final String placementName = args.getString(0);
+        final String placementName = args.getString("placementName");
 
         this.getActivity().runOnUiThread(new Runnable() {
             public void run() {
 
                 IronSource.showRewardedVideo(placementName);
-                callbackContext.success();
+                callbackContext.success("");
             }
         });
     }
 
-    private void hasRewardedVideoAction(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    private void hasRewardedVideoAction(JSONObject args, final CallbackContext callbackContext) throws JSONException {
         this.getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 boolean available = IronSource.isRewardedVideoAvailable();
-                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, available));
+                callbackContext.success("" + available);
             }
         });
     }
 
-    private void isRewardedVideoCappedForPlacementAction(JSONArray args, final CallbackContext callbackContext)
+    private void isRewardedVideoCappedForPlacementAction(JSONObject args, final CallbackContext callbackContext)
             throws JSONException {
 
-        final String placementName = args.getString(0);
+        final String placementName = args.getString("placementName");
 
         this.getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 boolean capped = IronSource.isRewardedVideoPlacementCapped(placementName);
-                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, capped));
+                callbackContext.success("" + capped);
             }
         });
     }
@@ -495,32 +460,32 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
      * ----------------------- INTERSTITIAL ---------------------------
      */
 
-    private void hasInterstitialAction(JSONArray args, final CallbackContext callbackContext) {
+    private void hasInterstitialAction(JSONObject args, final CallbackContext callbackContext) {
         this.getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 boolean ready = IronSource.isInterstitialReady();
-                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, ready));
+                callbackContext.success(ready + "");
             }
         });
     }
 
-    private void loadInterstitialAction(JSONArray args, final CallbackContext callbackContext) {
+    private void loadInterstitialAction(JSONObject args, final CallbackContext callbackContext) {
         this.getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 IronSource.loadInterstitial();
-                callbackContext.success();
+                callbackContext.success("");
             }
         });
     }
 
-    private void showInterstitialAction(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    private void showInterstitialAction(JSONObject args, final CallbackContext callbackContext) throws JSONException {
 
-        final String placementName = args.getString(0);
+        final String placementName = args.getString("placementName");
 
         this.getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 IronSource.showInterstitial(placementName);
-                callbackContext.success();
+                callbackContext.success("");
             }
         });
     }
@@ -565,24 +530,24 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
      * ----------------------- OFFERWALL ---------------------------
      */
 
-    private void showOfferwallAction(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    private void showOfferwallAction(JSONObject args, final CallbackContext callbackContext) throws JSONException {
         Log.d(TAG, "showOfferwallAction: ");
-        final String placementName = args.getString(0);
+        final String placementName = args.getString("placementName");
 
         this.getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 IronSource.showOfferwall(placementName);
-                callbackContext.success();
+                callbackContext.success("");
             }
         });
     }
 
-    private void hasOfferwallAction(JSONArray args, final CallbackContext callbackContext) {
+    private void hasOfferwallAction(JSONObject args, final CallbackContext callbackContext) {
         Log.d(TAG, "hasOfferwallAction: ");
         this.getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 boolean available = IronSource.isOfferwallAvailable();
-                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, available));
+                callbackContext.success("" + available);
             }
         });
 
@@ -647,7 +612,7 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
     /**
      * ----------------------- BANNER ---------------------------
      */
-    private void loadBannerAction(JSONArray args, final CallbackContext callbackContext) {
+    private void loadBannerAction(JSONObject args, final CallbackContext callbackContext) {
         Log.d(TAG, "loadBannerAction: ");
         final IronsourcePlugin self = this;
 
@@ -657,13 +622,13 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
 
                 self.loadBanner();
 
-                callbackContext.success();
+                callbackContext.success("");
             }
         });
 
     }
 
-    private void showBannerAction(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    private void showBannerAction(JSONObject args, final CallbackContext callbackContext) throws JSONException {
         Log.d(TAG, "showBannerAction: ");
 //        final String pos = args.getString(0);
 //        if (args.length() == 0){
@@ -671,9 +636,9 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
 //            int x = 0;
 //            int y = 0;
 //        }else if (args.length() == 1){
-        int pos = args.getInt(0);
-        int x = args.getInt(1);
-        int y = args.getInt(2);
+        final int pos = args.getInt("pos");
+        final int x = args.getInt("x");
+        final int y = args.getInt("y");
 //            int w = args.getInt(3);
 //            int h = args.getInt(4);
 //        }
@@ -691,7 +656,7 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
 
             public void run() {
                 self.showBanner(pos, x, y);
-                callbackContext.success();
+                callbackContext.success("");
 
             }
         });
@@ -701,7 +666,7 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
     /**
      * Destroys IronSource Banner and removes it from the container
      */
-    private void hideBannerAction(JSONArray args, final CallbackContext callbackContext) {
+    private void hideBannerAction(JSONObject args, final CallbackContext callbackContext) {
         Log.d(TAG, "hideBannerAction: ");
         final IronsourcePlugin self = this;
 
@@ -709,7 +674,7 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
 
             public void run() {
                 self.hideBanner();
-                callbackContext.success();
+                callbackContext.success("");
             }
         });
     }
@@ -749,29 +714,9 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
 
     public View getView() {
         Log.d(TAG, "getView: ");
-//        if(adapter != null) return adapter.getView();
-//        else {
-        // Cordova 3.x, class CordovaWebView extends WebView, -> AbsoluteLayout -> ViewGroup -> View -> Object
-        if (View.class.isAssignableFrom(CordovaWebView.class)) {
-            Log.d(TAG, "getView: ....webView....");
-            return (View) webView;
-        }
 
-        // Cordova 4.0.0-dev, interface CordovaWebView { View getView(); }
-        try {
-            Method getViewMethod = CordovaWebView.class.getMethod("getView", (Class<?>[]) null);
-            if (getViewMethod != null) {
-                Object[] args = {};
-                Log.d(TAG, "getView: in try....");
-                return (View) getViewMethod.invoke(webView, args);
-            }
-        } catch (Exception e) {
-        }
+        return this.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
 
-        Log.d(TAG, "getView: ......end....");
-        // or else we return the root view, but this should not happen
-        return cordova.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
-//        }
     }
 
 

@@ -1,13 +1,15 @@
 package me.mingz.ads;
 
+import org.cocos2dx.lib.Cocos2dxActivity;
+
 public class AdmobPlugin extends AdsPlugin {
 
     public AdmobPlugin() {
     }
 
     @Override
-    protected void onCreate() {
-        super.onCreate();
+    protected void init(Cocos2dxActivity activity) {
+        super.init(activity);
     }
 
     @Override
