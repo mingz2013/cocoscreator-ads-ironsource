@@ -8,11 +8,11 @@
 
 
 var log = require('../sdk_log');
-var bi = require('../sdk_bi');
+// var bi = require('../sdk_bi');
 var config = require('../sdk_config');
 
 var showlog = function (message) {
-    log.LOGD("<IronSourceAdsPlugin>------------", message);
+    cc.log("<IronSourceAdsPlugin>------------", message);
 };
 
 var IronSourceAdsPlugin = function (config) {
@@ -242,7 +242,7 @@ IronSourceAdsPlugin.prototype.init = function () {
             }.bind(this));
             window.addEventListener("bannerDidClick", function () {
                 showlog("bannerDidClick");
-                bi.sendEvent(config.BIConfig.IRONSRC_BANNER_TOUCH, {});
+                // bi.sendEvent(config.BIConfig.IRONSRC_BANNER_TOUCH, {});
 
             }.bind(this));
             window.addEventListener("bannerWillPresentScreen", function () {
@@ -306,16 +306,16 @@ IronSourceAdsPlugin.prototype.hasInterstitial = function (params) {
  * @param {Function} params.onFailure - optional on failure callback
  */
 IronSourceAdsPlugin.prototype.showInterstitial = function (params) {
-    bi.sendEvent(config.BIConfig.IRONSRC_INTERSTITIAL_SHOW, {});
+    // bi.sendEvent(config.BIConfig.IRONSRC_INTERSTITIAL_SHOW, {});
 
     var successCallback = function () {
-        bi.sendEvent(config.BIConfig.IRONSRC_INTERSTITIAL_SUCCESS, {});
+        // bi.sendEvent(config.BIConfig.IRONSRC_INTERSTITIAL_SUCCESS, {});
         params.onSuccess();
         window['IronSourceAds']['loadInterstitial']();
     }.bind(this);
 
     var failureCallback = function () {
-        bi.sendEvent(config.BIConfig.IRONSRC_INTERSTITIAL_FAIL, {});
+        // bi.sendEvent(config.BIConfig.IRONSRC_INTERSTITIAL_FAIL, {});
         params.onFailure();
         window['IronSourceAds']['loadInterstitial']();
     }.bind(this);
@@ -370,15 +370,15 @@ IronSourceAdsPlugin.prototype.hasRewardedVideo = function (params) {
  */
 IronSourceAdsPlugin.prototype.showRewardedVideo = function (params) {
 
-    bi.sendEvent(config.BIConfig.IRONSRC_REWARD_SHOW, {});
+    // bi.sendEvent(config.BIConfig.IRONSRC_REWARD_SHOW, {});
 
     var successCallback = function () {
-        bi.sendEvent(config.BIConfig.IRONSRC_REWARD_SUCCESS, {});
+        // bi.sendEvent(config.BIConfig.IRONSRC_REWARD_SUCCESS, {});
         params.onSuccess();
     }.bind(this);
 
     var failureCallback = function () {
-        bi.sendEvent(config.BIConfig.IRONSRC_REWARD_FAIL, {});
+        // bi.sendEvent(config.BIConfig.IRONSRC_REWARD_FAIL, {});
         params.onFailure();
     }.bind(this);
 

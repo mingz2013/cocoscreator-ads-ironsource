@@ -302,7 +302,7 @@ var IronSourceAds = (function () {
  * @param {Function} onFailure - optional on failure functioin
  */
 function callPlugin(action, params, onSuccess, onFailure) {
-    JsbNativeCall.exec('IronSourceAdsPlugin',
+    JsbNativeCall.exec('IronsourcePlugin',
         action, params,
         function callPluginSuccess(result) {
 

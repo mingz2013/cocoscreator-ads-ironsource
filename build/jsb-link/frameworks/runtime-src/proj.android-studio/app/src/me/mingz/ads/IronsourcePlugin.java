@@ -34,7 +34,7 @@ import com.ironsource.mediationsdk.sdk.BannerListener;
 public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener, OfferwallListener, InterstitialListener {
     private final String FALLBACK_USER_ID = "userId";
 
-    private static final String TAG = "[IronSourceAdsPlugin]";
+    private static final String TAG = "[IronsourcePlugin]";
 
     private static final String EVENT_INTERSTITIAL_LOADED = "interstitialLoaded";
     private static final String EVENT_INTERSTITIAL_SHOWN = "interstitialShown";
