@@ -1,5 +1,5 @@
 #import "IronSourceAdsPlugin.h"
-#import <Cordova/CDVViewController.h>
+//#import <Cordova/CDVViewController.h>
 
 static NSString *const EVENT_INTERSTITIAL_LOADED = @"interstitialLoaded";
 static NSString *const EVENT_INTERSTITIAL_SHOWN = @"interstitialShown";

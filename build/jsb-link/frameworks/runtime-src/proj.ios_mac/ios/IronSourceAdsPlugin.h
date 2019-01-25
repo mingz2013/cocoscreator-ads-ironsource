@@ -1,8 +1,9 @@
 #import <Foundation/Foundation.h>
-#import <Cordova/CDV.h>
+//#import <Cordova/CDV.h>
 #import <IronSource/IronSource.h>
+#import "AdsPlugin.h"
 
-@interface IronSourceAdsPlugin : CDVPlugin <ISRewardedVideoDelegate, ISBannerDelegate, ISOfferwallDelegate, ISInterstitialDelegate>
+@interface IronSourceAdsPlugin : AdsPlugin <ISRewardedVideoDelegate, ISBannerDelegate, ISOfferwallDelegate, ISInterstitialDelegate>
 
 @property(nonatomic, strong) ISBannerView *bannerView;
 @property(nonatomic) bool loadingBanner;

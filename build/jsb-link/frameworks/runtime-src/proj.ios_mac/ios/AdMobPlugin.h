@@ -1,9 +1,9 @@
-#import <Cordova/CDV.h>
+#import "AdsPlugin.h"
 //#import <AppLovinSDK/AppLovinSDK.h>
 //#import <GoogleMobileAds/GoogleMobileAds.h>
 @import GoogleMobileAds;
 
-@interface AdMobPlugin : CDVPlugin <GADInterstitialDelegate, GADRewardBasedVideoAdDelegate, GADBannerViewDelegate>
+@interface AdMobPlugin : AdsPlugin <GADInterstitialDelegate, GADRewardBasedVideoAdDelegate, GADBannerViewDelegate>
 
 
 // real ids
