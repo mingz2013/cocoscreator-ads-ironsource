@@ -1,4 +1,4 @@
-var config = require('../sdk_config');
+var config = require('./sdk_config');
 // let logManager = require('../sdk_log');
 
 var AdMobObj = require('./admob_plugin');

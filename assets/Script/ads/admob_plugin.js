@@ -1,5 +1,5 @@
 // var logManager = require('../sdk_log');
-var config = require('../sdk_config');
+var config = require('./sdk_config');
 // var bi = require('../sdk_bi');
 
 

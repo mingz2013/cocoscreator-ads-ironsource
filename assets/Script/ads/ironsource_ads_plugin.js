@@ -1,8 +1,6 @@
-
-
-var log = require('../sdk_log');
+// var log = require('../sdk_log');
 // var bi = require('../sdk_bi');
-var config = require('../sdk_config');
+var config = require('./sdk_config');
 
 var showlog = function (message) {
     cc.log("<IronSourceAdsPlugin>------------", message);

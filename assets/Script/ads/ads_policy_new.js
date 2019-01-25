@@ -1,6 +1,4 @@
-
-
-var config = require('../sdk_config');
+var config = require('./sdk_config');
 
 
 // var AdMobObj = require('./cordova_plugin_admob');
