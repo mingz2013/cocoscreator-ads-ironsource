@@ -1,6 +1,6 @@
 
 #import "JsbCall.h"
-#include <string>
+#include <string.h>
 #import "cocos2d.h"
 #include "cocos/scripting/js-bindings/jswrapper/SeApi.h"
 
