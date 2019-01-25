@@ -29,6 +29,7 @@ public class AdsPluginManager {
 
     public AdsPluginManager() {
         mPlugins.put("IronsourcePlugin", new IronsourcePlugin());
+        mPlugins.put("AdMobPlugin", new AdMobPlugin());
     }
 
 

@@ -150,7 +150,7 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
             return true;
         }
 
-        return false;
+        return super.exec(action, args, callbackContext);
     }
 
 
@@ -707,12 +707,7 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
 
     }
 
-    public View getView() {
-        Log.d(TAG, "getView: ");
 
-        return this.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
-
-    }
 
 
 

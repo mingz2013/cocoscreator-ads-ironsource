@@ -1,13 +1,15 @@
 package me.mingz.ads;
 
+import android.util.Log;
+import android.view.View;
+
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class AdsPlugin {
 
-
-
+    private static final String  TAG = "[AdsPlugin]";
 
     private Cocos2dxActivity mActivity = null;
 
@@ -68,9 +70,19 @@ public class AdsPlugin {
         });
     }
 
+    public View getView() {
+        Log.d(TAG, "getView: ");
+
+        return this.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+
+    }
+
+
+
+
 
     public boolean exec(final String action, final JSONObject args, final CallbackContext callbackContext) throws JSONException {
-        return true;
+        return false;
     }
 
 }

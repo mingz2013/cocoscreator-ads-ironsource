@@ -33,9 +33,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
                    android:value="ca-app-pub-3180535698853578~4286818547"/>
+
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+
         <activity android:configChanges="orientation|screenSize" android:hardwareAccelerated="true"
                   android:name="com.ironsource.sdk.controller.ControllerActivity"/>
         <activity android:configChanges="orientation|screenSize" android:hardwareAccelerated="true"
@@ -56,9 +59,9 @@
                   android:name="com.facebook.ads.AudienceNetworkActivity"/>
         <!--<activity android:configChanges="orientation|screenSize|keyboardHidden|keyboard|smallestScreenSize|uiMode|fontScale|screenLayout|locale" android:name="com.ironsource.adapters.hyprmx.MediationHMXActivity" />-->
         <!--<activity android:configChanges="keyboardHidden|orientation|keyboard|smallestScreenSize|screenSize|screenLayout" android:hardwareAccelerated="true" android:name="com.inmobi.rendering.InMobiAdActivity" android:resizeableActivity="false" android:theme="@android:style/Theme.NoTitleBar" />-->
-        <activity android:configChanges="orientation|screenLayout|screenSize" android:hardwareAccelerated="true"
-                  android:name="jp.maio.sdk.android.AdFullscreenActivity"
-                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+        <!--<activity android:configChanges="orientation|screenLayout|screenSize" android:hardwareAccelerated="true"-->
+        <!--android:name="jp.maio.sdk.android.AdFullscreenActivity"-->
+        <!--android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>-->
         <!--<activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="jp.maio.sdk.android.HtmlBasedAdActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />-->
         <!--<activity android:configChanges="orientation|screenSize|keyboard" android:hardwareAccelerated="true" android:name="com.mediabrix.android.service.AdViewActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />-->
         <!--<activity android:configChanges="orientation|screenSize|keyboard" android:hardwareAccelerated="true" android:name="com.mediabrix.android.service.ClickOutActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />-->

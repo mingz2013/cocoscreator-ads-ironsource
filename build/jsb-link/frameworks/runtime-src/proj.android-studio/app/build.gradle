@@ -156,15 +156,17 @@ dependencies {
     implementation fileTree(dir: "/Applications/CocosCreator-2.1.0.app/Contents/Resources/cocos2d-x/cocos/platform/android/java/libs", include: ['*.jar'])
     implementation project(':libcocos2dx')
 
-    implementation 'com.ironsource.sdk:mediationsdk:6.8.0.1@jar'
+
 
     implementation 'com.android.support:support-v4:27.1.0'
     implementation 'com.android.support:appcompat-v7:27.1.0'
     implementation 'com.android.support:recyclerview-v7:27.1.0'
     implementation 'com.android.support:support-annotations:27.1.0'
-
+    implementation 'com.google.android.gms:play-services-ads:17.1.1'
 
     implementation 'com.google.android.gms:play-services-ads:17.1.2'
+
+    implementation 'com.ironsource.sdk:mediationsdk:6.8.0.1@jar'
 
     // Add AdColony Network
     implementation 'com.ironsource.adapters:adcolonyadapter:4.1.5@jar'
