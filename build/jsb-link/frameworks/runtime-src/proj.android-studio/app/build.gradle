@@ -131,6 +131,7 @@ android.applicationVariants.all { variant ->
 
 repositories {
     jcenter() // includes the MoPub SDK and AVID library
+    maven { url "https://maven.google.com/"}
 
     maven {
         url 'https://dl.bintray.com/ironsource-mobile/android-sdk'
