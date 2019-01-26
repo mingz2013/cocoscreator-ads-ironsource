@@ -24,7 +24,7 @@ import android.widget.RelativeLayout;
 
 public class AdMobPlugin extends AdsPlugin {
 
-    String TAG = "<AdMobPlugin>: ";
+    public static final String TAG = "<AdMobPlugin>: ";
     // adtype use with event
     public static final String ADTYPE_BANNER = "banner";
     public static final String ADTYPE_INTERSTITIAL = "interstitial";

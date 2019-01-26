@@ -2,15 +2,18 @@ package me.mingz.ads;
 
 
 import android.os.Bundle;
+import android.util.Log;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
 public class AdsActivity extends Cocos2dxActivity {
 
+    private static final String  TAG = "[AdsActivity]";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.d(TAG, "onCreate: ");
 
 
         AdsPluginManager.getInstance().init(this);
@@ -19,6 +22,7 @@ public class AdsActivity extends Cocos2dxActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        Log.d(TAG, "onStart: ");
 
         AdsPluginManager.getInstance().onStart();
     }
@@ -53,6 +57,7 @@ public class AdsActivity extends Cocos2dxActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.d(TAG, "onDestroy: ");
 
         AdsPluginManager.getInstance().onDestroy();
     }

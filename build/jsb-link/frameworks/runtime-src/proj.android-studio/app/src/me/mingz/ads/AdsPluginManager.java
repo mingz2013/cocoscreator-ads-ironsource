@@ -6,7 +6,10 @@ import org.cocos2dx.lib.Cocos2dxActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class AdsPluginManager {
 
@@ -28,12 +31,15 @@ public class AdsPluginManager {
 
 
     public AdsPluginManager() {
+        Log.d(TAG, "AdsPluginManager: ");
+        mPlugins = new HashMap<String, AdsPlugin>();
         mPlugins.put("IronsourcePlugin", new IronsourcePlugin());
         mPlugins.put("AdMobPlugin", new AdMobPlugin());
     }
 
 
     protected void init(Cocos2dxActivity activity) {
+        Log.d(TAG, "init: ");
         mActivity = activity;
 
         for (Map.Entry<String, AdsPlugin> entry : mPlugins.entrySet()) {
@@ -46,6 +52,7 @@ public class AdsPluginManager {
     }
 
     protected void onResume() {
+        Log.d(TAG, "onResume: ");
         for (Map.Entry<String, AdsPlugin> entry : mPlugins.entrySet()) {
 //            System.out.println("Key: "+ entry.getKey()+ " Value: "+entry.getValue());
             entry.getValue().onResume();
@@ -63,6 +70,7 @@ public class AdsPluginManager {
 
 
     protected void onDestroy() {
+        Log.d(TAG, "onDestroy: ");
         for (Map.Entry<String, AdsPlugin> entry : mPlugins.entrySet()) {
 //            System.out.println("Key: "+ entry.getKey()+ " Value: "+entry.getValue());
             entry.getValue().onDestroy();
@@ -71,6 +79,7 @@ public class AdsPluginManager {
     }
 
     protected void onStart() {
+        Log.d(TAG, "onStart: ");
         for (Map.Entry<String, AdsPlugin> entry : mPlugins.entrySet()) {
 //            System.out.println("Key: "+ entry.getKey()+ " Value: "+entry.getValue());
             entry.getValue().onStart();
@@ -80,6 +89,7 @@ public class AdsPluginManager {
 
 
     protected void onStop() {
+        Log.d(TAG, "onStop: ");
         for (Map.Entry<String, AdsPlugin> entry : mPlugins.entrySet()) {
 //            System.out.println("Key: "+ entry.getKey()+ " Value: "+entry.getValue());
             entry.getValue().onStop();
@@ -88,6 +98,7 @@ public class AdsPluginManager {
     }
 
     protected void onRestart() {
+        Log.d(TAG, "onRestart: ");
         for (Map.Entry<String, AdsPlugin> entry : mPlugins.entrySet()) {
 //            System.out.println("Key: "+ entry.getKey()+ " Value: "+entry.getValue());
             entry.getValue().onRestart();
@@ -98,6 +109,7 @@ public class AdsPluginManager {
 
 
     public boolean exec(final String service, final String action, final JSONObject args, final CallbackContext callbackContext) throws JSONException {
+        Log.d(TAG, "exec: ");
         AdsPlugin plugin = mPlugins.get(service);
 
         if(plugin != null){
