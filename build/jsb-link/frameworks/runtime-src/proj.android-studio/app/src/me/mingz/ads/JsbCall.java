@@ -1,12 +1,20 @@
 package me.mingz.ads;
 
+import android.util.Log;
+
+import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxJavascriptJavaBridge;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+
 public class JsbCall {
 
+    static final private String TAG = "[JsbCall]";
+
     public static void exec(String service, String action, String params, String callbackId) {
+        Log.d(TAG, "exec: " +  service +" "+ action+" " + params+" " + callbackId);
         final CallbackContext callbackContext = new CallbackContext(callbackId);
         try{
             boolean ret = JsbCall.exec(service, action, new JSONObject(params), callbackContext);
@@ -36,16 +44,55 @@ public class JsbCall {
 
 
     public static void emitWindowEvent(final String event, final JSONObject data){
-        Cocos2dxJavascriptJavaBridge.evalString(String.format("JsbNativeCall.emitWindowEvent('%s', '%s')", event, data.toString()));
+        Log.d(TAG, "successCall: " + event + " data: " + data.toString());
+        Cocos2dxActivity ctx = AdsPluginManager.getInstance().getActivity();
+        ctx.runOnGLThread(new Runnable() {
+            @Override
+            public void run() {
+                Cocos2dxJavascriptJavaBridge.evalString(String.format("window.JsbNativeCall.emitWindowEvent('%s', '%s')", event, data.toString()));
+            }
+        });
+
     }
 
 
-    public static void successCall(String callbackId, String params){
-        Cocos2dxJavascriptJavaBridge.evalString(String.format("JsbNativeCall.callBackCallSuccess('%s', '%s)", callbackId, params));
+    public static void successCall(final String callbackId, final String params){
+        Log.d(TAG, "successCall: " + callbackId + " params: " + params);
+
+
+
+        Cocos2dxActivity ctx = AdsPluginManager.getInstance().getActivity();
+        ctx.runOnGLThread(new Runnable() {
+            @Override
+            public void run() {
+                Cocos2dxJavascriptJavaBridge.evalString("cc.log(\"Javascript Java bridge!\")");
+                Log.d(TAG, "successCall: log....");
+                Cocos2dxJavascriptJavaBridge.evalString("cc.log(\"successcall....cc.log.....test.....\");");
+
+                String jsStr = String.format("window.JsbNativeCall.callBackCallSuccess('%s', '%s')", callbackId, params);
+                Log.d(TAG, "successCall: evalString: " + jsStr);
+                Cocos2dxJavascriptJavaBridge.evalString(jsStr);
+            }
+        });
+
+
+
     }
 
-    public static void failureCall(String callbackId, String params){
-        Cocos2dxJavascriptJavaBridge.evalString(String.format("JsbNativeCall.callBackCallFailure('%s', '%s)", callbackId, params));
+    public static void failureCall(final String callbackId, final String params){
+        Log.d(TAG, "failureCall: " + callbackId + " params: " + params);
+
+        Cocos2dxActivity ctx = AdsPluginManager.getInstance().getActivity();
+        ctx.runOnGLThread(new Runnable() {
+            @Override
+            public void run() {
+                String jsStr = String.format("window.JsbNativeCall.callBackCallFailure('%s', '%s')", callbackId, params);
+                Log.d(TAG, "failureCall: evalString: " + jsStr);
+                Cocos2dxJavascriptJavaBridge.evalString(jsStr);
+            }
+        });
+
+
     }
 
 

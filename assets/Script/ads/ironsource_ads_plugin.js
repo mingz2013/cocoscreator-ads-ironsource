@@ -1,6 +1,19 @@
+/**
+ *
+ *
+ *https://github.com/mingz2013/cordova-plugin-ironsource-ads
+ *
+ *
+ * */
+
+
+
 // var log = require('../sdk_log');
 // var bi = require('../sdk_bi');
 var config = require('./sdk_config');
+var ironsourceAds = require('./ironsourceads');
+
+window['IronSourceAds'] = ironsourceAds;
 
 var showlog = function (message) {
     cc.log("<IronSourceAdsPlugin>------------", message);
@@ -10,7 +23,7 @@ var showerror = function (message) {
     cc.log("<IronSourceAdsPlugin>------------", message);
 };
 
-var IronSourceAdsPlugin = function (config) {
+var IronSourceAdsPluginNew = function (config) {
     this.config = config;
 
     // this.rewardVideoAvailable = false;
@@ -35,9 +48,9 @@ var IronSourceAdsPlugin = function (config) {
 
 };
 
-IronSourceAdsPlugin.prototype.init = function () {
+IronSourceAdsPluginNew.prototype.init = function () {
     window['IronSourceAds']['init']({
-        "appKey": platformId === 'ios' ? this.config.IOS_KEY : this.config.ANDROID_KEY,
+        "appKey": cc.sys.os === cc.sys.OS_IOS ? this.config.IOS_KEY : this.config.ANDROID_KEY,
         "userId": this.config.userId,
         "debug": this.config.isDebug,
         "onSuccess": function () {
@@ -279,7 +292,7 @@ IronSourceAdsPlugin.prototype.init = function () {
  * @param {Function} params.onSuccess - optional on success callback
  * @param {Function} params.onFailure - optional on failure callback
  */
-IronSourceAdsPlugin.prototype.hasInterstitial = function (params) {
+IronSourceAdsPluginNew.prototype.hasInterstitial = function (params) {
     window['IronSourceAds']['hasInterstitial']({
         "onSuccess": function (available) {
             if (available) {
@@ -300,7 +313,7 @@ IronSourceAdsPlugin.prototype.hasInterstitial = function (params) {
  * @param {Function} params.onSuccess - optional on success callback
  * @param {Function} params.onFailure - optional on failure callback
  */
-IronSourceAdsPlugin.prototype.showInterstitial = function (params) {
+IronSourceAdsPluginNew.prototype.showInterstitial = function (params) {
     // bi.sendEvent(config.BIConfig.IRONSRC_INTERSTITIAL_SHOW, {});
 
     var successCallback = function () {
@@ -343,7 +356,7 @@ IronSourceAdsPlugin.prototype.showInterstitial = function (params) {
  * @param {Function} params.onSuccess - optional on success callback
  * @param {Function} params.onFailure - optional on failure callback
  */
-IronSourceAdsPlugin.prototype.hasRewardedVideo = function (params) {
+IronSourceAdsPluginNew.prototype.hasRewardedVideo = function (params) {
     window['IronSourceAds']['hasRewardedVideo']({
         "onSuccess": function (available) {
             if (available) {
@@ -363,7 +376,7 @@ IronSourceAdsPlugin.prototype.hasRewardedVideo = function (params) {
  * @param {Function} params.onSuccess - optional on success callback
  * @param {Function} params.onFailure - optional on failure callback
  */
-IronSourceAdsPlugin.prototype.showRewardedVideo = function (params) {
+IronSourceAdsPluginNew.prototype.showRewardedVideo = function (params) {
 
     // bi.sendEvent(config.BIConfig.IRONSRC_REWARD_SHOW, {});
 
@@ -408,7 +421,7 @@ IronSourceAdsPlugin.prototype.showRewardedVideo = function (params) {
  * @param {Function} params.onSuccess - optional on success callback
  * @param {Function} params.onFailure - optional on failure callback
  */
-IronSourceAdsPlugin.prototype.showOfferwall = function (params) {
+IronSourceAdsPluginNew.prototype.showOfferwall = function (params) {
     window['IronSourceAds']['hasOfferwall']({
         'onSuccess': function (available) {
             if (available) {
@@ -433,12 +446,12 @@ IronSourceAdsPlugin.prototype.showOfferwall = function (params) {
 };
 
 
-IronSourceAdsPlugin.prototype.loadBanner = function () {
+IronSourceAdsPluginNew.prototype.loadBanner = function () {
     window['IronSourceAds']['loadBanner']();
 };
 
 
-IronSourceAdsPlugin.prototype.showBanner = function () {
+IronSourceAdsPluginNew.prototype.showBanner = function () {
     if (this._bannerLoaded) {
         window['IronSourceAds']['showBanner']();
     } else {
@@ -447,9 +460,9 @@ IronSourceAdsPlugin.prototype.showBanner = function () {
 
 };
 
-IronSourceAdsPlugin.prototype.hideBanner = function () {
+IronSourceAdsPluginNew.prototype.hideBanner = function () {
     window['IronSourceAds']['hideBanner']();
 
 };
 
-module.exports = IronSourceAdsPlugin;
+module.exports = IronSourceAdsPluginNew;

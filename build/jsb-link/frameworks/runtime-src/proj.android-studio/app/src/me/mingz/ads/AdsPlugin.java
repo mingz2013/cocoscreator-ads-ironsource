@@ -61,13 +61,7 @@ public class AdsPlugin {
 
 
     public void emitWindowEvent(final String event, final JSONObject data){
-        // 一定要在 GL 线程中执行
-        this.getActivity().runOnGLThread(new Runnable() {
-            @Override
-            public void run() {
-                JsbCall.emitWindowEvent(event, data);
-            }
-        });
+        JsbCall.emitWindowEvent(event, data);
     }
 
     public View getView() {

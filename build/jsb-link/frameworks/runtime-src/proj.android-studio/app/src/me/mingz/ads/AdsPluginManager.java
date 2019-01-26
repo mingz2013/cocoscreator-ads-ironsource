@@ -38,6 +38,11 @@ public class AdsPluginManager {
     }
 
 
+    public Cocos2dxActivity getActivity(){
+        return mActivity;
+    }
+
+
     protected void init(Cocos2dxActivity activity) {
         Log.d(TAG, "init: ");
         mActivity = activity;

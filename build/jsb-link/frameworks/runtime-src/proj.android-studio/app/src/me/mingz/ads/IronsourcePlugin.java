@@ -102,7 +102,7 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
 
     @Override
     public boolean exec(String action, JSONObject args, final CallbackContext callbackContext) throws JSONException{
-
+        Log.d(TAG, "exec: ");
         if (action.equals("init")) {
             this.initAction(args, callbackContext);
             return true;
@@ -215,7 +215,7 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
      * Intilization action Initializes IronSource
      */
     private void initAction(JSONObject args, final CallbackContext callbackContext) throws JSONException {
-        Log.d(TAG, "initAction: ");
+        Log.d(TAG, "initAction: " + args.toString());
         final String appKey = args.getString("appKey");
         final String providedUserId = args.getString("providedUserId");
         final Boolean isDebug = args.getBoolean("debug");
@@ -233,6 +233,8 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
 //        final String appKey = "82ed924d";
 
         final IronsourcePlugin self = this;
+
+        Log.d(TAG, "initAction: .................");
 
         // getting advertiser id should be done on a background thread
         AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
@@ -257,12 +259,14 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
 
                 // we're using an advertisingId as the 'userId'
                 init(appKey, userId, isDebug);
+
                 callbackContext.success("");
 
             }
         };
 
         task.execute();
+        Log.d(TAG, "initAction: end....");
     }
 
     /**
@@ -271,7 +275,7 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
      * @todo Provide
      */
     private void init(String appKey, String userId, Boolean isDebug) {
-        Log.d(TAG, "init: ");
+        Log.d(TAG, "init: ...." + appKey + ".." + userId + ".." + isDebug);
         // Be sure to set a listener to each product that is being initiated
         // set the IronSource rewarded video listener
         IronSource.setRewardedVideoListener(this);
@@ -294,6 +298,9 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
         if (isDebug) {
             IronSource.setAdaptersDebug(true);
         }
+
+
+        Log.d(TAG, "init: end .....");
     }
 
     /**

@@ -1,3 +1,5 @@
+var JsbNativeCall = require('./JsbNativeCall');
+
 var IronSourceAds = (function () {
 
     var initialized = false;
@@ -98,7 +100,7 @@ var IronSourceAds = (function () {
 
             callPlugin('init', {
                 appKey: params.appKey,
-                userId: params.userId,
+                providedUserId: params.userId,
                 debug: params.debug,
                 position: params.position,
                 x: params.x,
@@ -350,6 +352,7 @@ function defaults(o, defaultObject) {
 }
 
 
-if (typeof module !== undefined && module.exports) {
-    module.exports = IronSourceAds;
-}
+module.exports = IronSourceAds;
+
+
+window.IronSourceAds = IronSourceAds;

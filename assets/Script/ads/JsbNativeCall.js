@@ -1,8 +1,9 @@
-window.JsbNativeCall = (function () {
+var JsbNativeCall = (function () {
 
     function createEvent(type, data) {
-        var event = document.createEvent('Events');
-        event.initEvent(type, false, false);
+        // var event = document.createEvent('Event');
+        var event = new window.Event(type);
+        // event.initEvent(type, false, false);
         if (data) {
             for (var i in data) {
                 if (data.hasOwnProperty(i)) {
@@ -10,18 +11,18 @@ window.JsbNativeCall = (function () {
                 }
             }
         }
+        // event['type'] = type;
         return event;
     }
 
 
     function emitWindowEvent(type, data) {
+        cc.log("[JsbNativeCall]", type, data);
         var evt = createEvent(type, data);
 
-        if (window.dispatchEvent) {
-            window.dispatchEvent(evt);
-        } else {
-            window.fireEvent(evt);
-        }
+
+        window.dispatchEvent(evt);
+
 
     }
 
@@ -63,6 +64,7 @@ window.JsbNativeCall = (function () {
 
 
     function _exec(service, action, params, callbackId) {
+        cc.log("JsbnativeCall", "_exec", service, action, params, callbackId);
         jsb.reflection.callStaticMethod("me.mingz.ads.JsbCall", "exec", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V", service, action, params, callbackId);
 
     }
@@ -76,7 +78,7 @@ window.JsbNativeCall = (function () {
      * @param {function} failure
      */
     function exec(service, action, params, success, failure) {
-
+        cc.log("JsbnativeCall", "exec", "....");
         var callbackContext = newCallBackContext(success, failure);
         setCallbackContext(callbackContext);
 
@@ -86,7 +88,7 @@ window.JsbNativeCall = (function () {
 
 
     function callBackCallSuccess(callbackId, params) {
-
+        cc.log("JsbnativeCall", "callBackCallSuccess", "....", callbackId, params);
         var callbackContext = getCallbackContext(callbackId);
         if (callbackContext && callbackContext.hasOwnProperty("success")) {
             callbackContext.success(params);
@@ -94,6 +96,7 @@ window.JsbNativeCall = (function () {
     }
 
     function callBackCallFailure(callbackId, params) {
+        cc.log("JsbnativeCall", "callBackCallFailure", "....", callbackId, params);
         var callbackContext = getCallbackContext(callbackId);
         if (callbackContext && callbackContext.hasOwnProperty("failure")) {
             callbackContext.failure(params);
@@ -112,3 +115,7 @@ window.JsbNativeCall = (function () {
 
 
 })();
+
+window.JsbNativeCall = JsbNativeCall;
+
+module.exports = JsbNativeCall;
