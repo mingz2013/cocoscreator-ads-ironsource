@@ -143,13 +143,13 @@ repositories {
         url  "https://adcolony.bintray.com/AdColony"
     }
 
-    maven {
-        url "https://s3.amazonaws.com/moat-sdk-builds"
-    }
+   // maven {
+     //   url "https://s3.amazonaws.com/moat-sdk-builds"
+    //}
 
-    maven {
-        url "https://raw.githubusercontent.com/HyprMXMobile/Android-SDKs/master"
-    }
+   // maven {
+     //   url "https://raw.githubusercontent.com/HyprMXMobile/Android-SDKs/master"
+    //}
 }
 
 dependencies {
