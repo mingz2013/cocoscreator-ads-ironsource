@@ -482,11 +482,11 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
 
     private void showInterstitialAction(JSONObject args, final CallbackContext callbackContext) throws JSONException {
 
-        final String placementName = args.getString("placementName");
+        final String placement = args.getString("placement");
 
         this.getActivity().runOnUiThread(new Runnable() {
             public void run() {
-                IronSource.showInterstitial(placementName);
+                IronSource.showInterstitial(placement);
                 callbackContext.success("");
             }
         });
@@ -638,7 +638,7 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
 //            int x = 0;
 //            int y = 0;
 //        }else if (args.length() == 1){
-        final int pos = args.getInt("pos");
+        final int position = args.getInt("position");
         final int x = args.getInt("x");
         final int y = args.getInt("y");
 //            int w = args.getInt(3);
@@ -649,7 +649,7 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
         //int y = args.optInt(2);
 //
 
-        Log.d(TAG, "showBannerAction: " + pos);
+        Log.d(TAG, "showBannerAction: " + position);
 
 
         final IronsourcePlugin self = this;
@@ -657,7 +657,7 @@ public class IronsourcePlugin extends AdsPlugin implements RewardedVideoListener
         this.getActivity().runOnUiThread(new Runnable() {
 
             public void run() {
-                self.showBanner(pos, x, y);
+                self.showBanner(position, x, y);
                 callbackContext.success("");
 
             }

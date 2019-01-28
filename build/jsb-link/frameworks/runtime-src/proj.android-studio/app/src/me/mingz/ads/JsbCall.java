@@ -25,6 +25,7 @@ public class JsbCall {
 //            }
 
         }catch (JSONException e){
+            Log.e(TAG, "exec: e: ", e);
             callbackContext.failure(String.format("params to json or params error, params: %s", params));
         }
 
