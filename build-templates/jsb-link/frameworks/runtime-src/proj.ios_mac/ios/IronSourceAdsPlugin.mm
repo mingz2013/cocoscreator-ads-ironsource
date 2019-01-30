@@ -178,7 +178,11 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
     NSString *placement = [args objectForKey:@"placement"];
     BOOL capped = [IronSource isRewardedVideoCappedForPlacement:placement];
 
-    [callbackContext success];
+    NSDictionary *data = @{
+                           @"capped" : @(capped)
+                           };
+
+    [callbackContext success : data];
 }
 
 
@@ -223,9 +227,11 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
 {
 
     BOOL available = [IronSource hasRewardedVideo];
-
+    NSDictionary *data = @{
+                           @"available" : @(available)
+                           };
     // Send callback successfull
-    [callbackContext success];
+    [callbackContext success : data];
 }
 
 // This method gets invoked after the user has been rewarded.
@@ -524,7 +530,7 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
 - (void)offerwallDidClose
 {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    [self emitWindowEvent:EVENT_OFFERWALL_SHOW_FAILED];
+    [self emitWindowEvent:EVENT_OFFERWALL_CLOSED];
 }
 
 - (void)offerwallDidFailToShowWithError:(NSError *)error
@@ -538,7 +544,7 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
                                    }
                            };
 
-    [self emitWindowEvent : EVENT_OFFERWALL_CREDIT_FAILED withData:data];
+    [self emitWindowEvent : EVENT_OFFERWALL_SHOW_FAILED withData:data];
 }
 
 - (void)offerwallDidShow
