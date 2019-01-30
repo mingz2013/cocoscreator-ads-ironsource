@@ -64,14 +64,10 @@ static  int BANNER_POSITION_POS_XY = 10;
 
 @implementation AdMobPlugin
 
-- (void) pluginInitialize {
-  [super pluginInitialize];
-//  [ALSdk initializeSdk];
-  NSLog(@"AdMob: SDK initialized");
-}
 
-- (void) init:(CDVInvokedUrlCommand*)command{
-    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+- (void) init : (NSDictionary *) args : (CallbackContext*)callbackContext{
+    NSDictionary* params = args;
     self.testDevice = params[@"testDevice"];
 //    self.mOverlap = params[@"overlap"];
     self.runType = params[@"runType"];
@@ -97,14 +93,14 @@ static  int BANNER_POSITION_POS_XY = 10;
 
     // Initialize Google Mobile Ads SDK
     // Sample AdMob app ID: ca-app-pub-3940256099942544~1458002511
-    [GADMobileAds configureWithApplicationID:self.admobAppId];
+    [GADMobileAds configureWithApplicationID : self.admobAppId];
 
 
 }
 
 
 
-- (void) createInterstitial:(CDVInvokedUrlCommand*)command{
+- (void) createInterstitial : (NSDictionary *)args : (CallbackContext*)callbackContext{
 
     self.interstitial = [[GADInterstitial alloc]
                          initWithAdUnitID:self.admobUnitIdInterstitial];
@@ -116,19 +112,19 @@ static  int BANNER_POSITION_POS_XY = 10;
 
 
 
-- (void) loadInterstitial:(CDVInvokedUrlCommand*)command{
+- (void) loadInterstitial : (NSDictionary *)args : (CallbackContext*)callbackContext{
     GADRequest *request = [GADRequest request];
     [self.interstitial loadRequest:request];
 }
 
 
-- (void) isInterstitialLoading:(CDVInvokedUrlCommand*)command{
+- (void) isInterstitialLoading : (NSDictionary *)args : (CallbackContext*)callbackContext{
 
 }
-- (void) isInterstitialLoaded:(CDVInvokedUrlCommand*)command{
+- (void) isInterstitialLoaded : (NSDictionary *)args : (CallbackContext*)callbackContext{
 
 }
-- (void) showInterstitial:(CDVInvokedUrlCommand*)command{
+- (void) showInterstitial : (NSDictionary *)args : (CallbackContext*)callbackContext{
     if (self.interstitial.isReady) {
         [self.interstitial presentFromRootViewController:self.viewController];
     } else {
@@ -140,47 +136,47 @@ static  int BANNER_POSITION_POS_XY = 10;
 #pragma mark - interstitial delegate funtions
 
 /// Tells the delegate an ad request succeeded.
-- (void)interstitialDidReceiveAd:(GADInterstitial *)ad {
+- (void)interstitialDidReceiveAd : (GADInterstitial *)ad {
     NSLog(@"interstitialDidReceiveAd");
 }
 
 /// Tells the delegate an ad request failed.
-- (void)interstitial:(GADInterstitial *)ad
-didFailToReceiveAdWithError:(GADRequestError *)error {
+- (void)interstitial : (GADInterstitial *)ad
+didFailToReceiveAdWithError : (GADRequestError *)error {
     NSLog(@"interstitial:didFailToReceiveAdWithError: %@", [error localizedDescription]);
 }
 
 /// Tells the delegate that an interstitial will be presented.
-- (void)interstitialWillPresentScreen:(GADInterstitial *)ad {
+- (void)interstitialWillPresentScreen : (GADInterstitial *)ad {
     NSLog(@"interstitialWillPresentScreen");
 }
 
 /// Tells the delegate the interstitial is to be animated off the screen.
-- (void)interstitialWillDismissScreen:(GADInterstitial *)ad {
+- (void)interstitialWillDismissScreen : (GADInterstitial *)ad {
     NSLog(@"interstitialWillDismissScreen");
 }
 
 /// Tells the delegate the interstitial had been animated off the screen.
-- (void)interstitialDidDismissScreen:(GADInterstitial *)ad {
+- (void)interstitialDidDismissScreen : (GADInterstitial *)ad {
     NSLog(@"interstitialDidDismissScreen");
 }
 
 /// Tells the delegate that a user click will open another app
 /// (such as the App Store), backgrounding the current app.
-- (void)interstitialWillLeaveApplication:(GADInterstitial *)ad {
+- (void)interstitialWillLeaveApplication : (GADInterstitial *)ad {
     NSLog(@"interstitialWillLeaveApplication");
 }
 
 
 
-- (void) createRewardedVideo:(CDVInvokedUrlCommand*)command{
+- (void) createRewardedVideo : (NSDictionary *)args : (CallbackContext*)callbackContext{
     [GADRewardBasedVideoAd sharedInstance].delegate = self;
 }
-- (void) loadRewardedVideo:(CDVInvokedUrlCommand*)command{
+- (void) loadRewardedVideo : (NSDictionary *)args : (CallbackContext*)callbackContext{
     [[GADRewardBasedVideoAd sharedInstance] loadRequest:[GADRequest request]
                                            withAdUnitID:self.admobUnitIdRewardedVideo];
 }
-- (void) showRewardedVideo:(CDVInvokedUrlCommand*)command{
+- (void) showRewardedVideo : (NSDictionary *)args : (CallbackContext*)callbackContext{
     if ([[GADRewardBasedVideoAd sharedInstance] isReady]) {
         [[GADRewardBasedVideoAd sharedInstance] presentFromRootViewController:self.viewController];
     }
@@ -230,7 +226,7 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
 
 
 
-- (void) createBanner:(CDVInvokedUrlCommand*)command{
+- (void) createBanner : (NSDictionary *)args : (CallbackContext*)callbackContext{
     // In this case, we instantiate the banner with desired ad size.
     self.bannerView = [[GADBannerView alloc]
                        initWithAdSize:kGADAdSizeBanner];
@@ -264,13 +260,13 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
 }
 
 
-- (void) loadBanner:(CDVInvokedUrlCommand*)command{
+- (void) loadBanner:(NSDictionary *)args : (CallbackContext*)callbackContext{
     [self.bannerView loadRequest:[GADRequest request]];
 }
-- (void) showBanner:(CDVInvokedUrlCommand*)command{
+- (void) showBanner:(NSDictionary *)args : (CallbackContext*)callbackContext{
     [self addBannerViewToView:self.bannerView];
 }
-- (void) hideBanner:(CDVInvokedUrlCommand*)command{
+- (void) hideBanner:(NSDictionary *)args : (CallbackContext*)callbackContext{
 
 }
 
@@ -313,17 +309,17 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
 
 
 
-- (void) fireEvent:(NSString *)obj event:(NSString *)eventName withData:(NSString *)jsonStr {
-  NSString* js;
-  if(obj && [obj isEqualToString:@"window"]) {
-    js = [NSString stringWithFormat:@"var evt=document.createEvent(\"UIEvents\");evt.initUIEvent(\"%@\",true,false,window,0);window.dispatchEvent(evt);", eventName];
-  } else if(jsonStr && [jsonStr length]>0) {
-    js = [NSString stringWithFormat:@"javascript:cordova.fireDocumentEvent('%@',%@);", eventName, jsonStr];
-  } else {
-    js = [NSString stringWithFormat:@"javascript:cordova.fireDocumentEvent('%@');", eventName];
-  }
-  [self.commandDelegate evalJs:js];
-}
+//- (void) fireEvent:(NSString *)obj event:(NSString *)eventName withData:(NSString *)jsonStr {
+//  NSString* js;
+//  if(obj && [obj isEqualToString:@"window"]) {
+//    js = [NSString stringWithFormat:@"var evt=document.createEvent(\"UIEvents\");evt.initUIEvent(\"%@\",true,false,window,0);window.dispatchEvent(evt);", eventName];
+//  } else if(jsonStr && [jsonStr length]>0) {
+//    js = [NSString stringWithFormat:@"javascript:cordova.fireDocumentEvent('%@',%@);", eventName, jsonStr];
+//  } else {
+//    js = [NSString stringWithFormat:@"javascript:cordova.fireDocumentEvent('%@');", eventName];
+//  }
+//  [self.commandDelegate evalJs:js];
+//}
 
 @end
 

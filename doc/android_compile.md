@@ -1,0 +1,1 @@
+直接用cocoscreator生成项目编译即可

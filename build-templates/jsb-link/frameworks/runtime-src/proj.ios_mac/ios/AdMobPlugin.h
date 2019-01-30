@@ -1,7 +1,8 @@
 #import "AdsPlugin.h"
 //#import <AppLovinSDK/AppLovinSDK.h>
-//#import <GoogleMobileAds/GoogleMobileAds.h>
-@import GoogleMobileAds;
+#import <GoogleMobileAds/GoogleMobileAds.h>
+//#import GoogleMobileAds;
+//#import <GoogleMobileAds>;
 
 @interface AdMobPlugin : AdsPlugin <GADInterstitialDelegate, GADRewardBasedVideoAdDelegate, GADBannerViewDelegate>
 
@@ -28,21 +29,21 @@
 
 
 
-- (void) init:(CDVInvokedUrlCommand*)command;
-- (void) createInterstitial:(CDVInvokedUrlCommand*)command;
-- (void) loadInterstitial:(CDVInvokedUrlCommand*)command;
-- (void) isInterstitialLoading:(CDVInvokedUrlCommand*)command;
-- (void) isInterstitialLoaded:(CDVInvokedUrlCommand*)command;
-- (void) showInterstitial:(CDVInvokedUrlCommand*)command;
+- (void) init : (NSDictionary *)args : (CallbackContext*)callbackContext;
+- (void) createInterstitial : (NSDictionary *)args : (CallbackContext*)callbackContext;
+- (void) loadInterstitial : (NSDictionary *)args : (CallbackContext*)callbackContext;
+- (void) isInterstitialLoading : (NSDictionary *)args : (CallbackContext*)callbackContext;
+- (void) isInterstitialLoaded : (NSDictionary *)args : (CallbackContext*)callbackContext;
+- (void) showInterstitial : (NSDictionary *)args : (CallbackContext*)callbackContext;
 
-- (void) createRewardedVideo:(CDVInvokedUrlCommand*)command;
-- (void) loadRewardedVideo:(CDVInvokedUrlCommand*)command;
-- (void) showRewardedVideo:(CDVInvokedUrlCommand*)command;
+- (void) createRewardedVideo : (NSDictionary *)args : (CallbackContext*)callbackContext;
+- (void) loadRewardedVideo : (NSDictionary *)args : (CallbackContext*)callbackContext;
+- (void) showRewardedVideo : (NSDictionary *)args : (CallbackContext*)callbackContext;
 
-- (void) createBanner:(CDVInvokedUrlCommand*)command;
-- (void) loadBanner:(CDVInvokedUrlCommand*)command;
-- (void) showBanner:(CDVInvokedUrlCommand*)command;
-- (void) hideBanner:(CDVInvokedUrlCommand*)command;
+- (void) createBanner : (NSDictionary *)args : (CallbackContext*)callbackContext;
+- (void) loadBanner : (NSDictionary *)args : (CallbackContext*)callbackContext;
+- (void) showBanner :(NSDictionary *)args :(CallbackContext*)callbackContext;
+- (void) hideBanner :(NSDictionary *)args :(CallbackContext*)callbackContext;
 
 
 

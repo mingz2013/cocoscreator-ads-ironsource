@@ -6,5 +6,15 @@
 @interface AdsViewController : UIViewController {
 
 }
-- (BOOL)prefersStatusBarHidden;
+
+
+// iOS应用生命周期
+- (void)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
+- (void)applicationDidBecomeActive:(UIApplication *)application;
+- (void)applicationWillResignActive:(UIApplication *)application;
+- (void)applicationDidEnterBackground:(UIApplication *)application;
+- (void)applicationWillEnterForeground:(UIApplication *)application;
+- (void)applicationWillTerminate:(UIApplication *)application;
+
+
 @end

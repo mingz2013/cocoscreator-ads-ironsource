@@ -1,22 +1,17 @@
 //
-//  NSObject+AdsPlugin.h
-//  hello_world-mobile
+//  SDKWrapper.h
+//  polish_project-mobile
 //
-//  Created by zhaojm on 2019/1/25.
+//  Created by 杨欣 on 2018/10/20.
 //
 
 #import <Foundation/Foundation.h>
-#import "CallbackContext.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AdsPluginManager: NSObject
-
-@property(nonatomic, strong) NSMutableDictionary *plugins;
-@property(nonatomic, strong) UIViewController *viewController;
-
+@interface SDKWrapper : NSObject
+@property(nonatomic,strong) NSString *name;
 + (instancetype)getInstance;
-
-
 // iOS应用生命周期
 - (void)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 - (void)applicationDidBecomeActive:(UIApplication *)application;
@@ -24,15 +19,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)applicationDidEnterBackground:(UIApplication *)application;
 - (void)applicationWillEnterForeground:(UIApplication *)application;
 - (void)applicationWillTerminate:(UIApplication *)application;
-
-
-- (void)initPlugins : (UIViewController*)viewController;
-
-
-- (Boolean)exec : (NSString*) service : (NSString*) action : (NSDictionary*)args : (CallbackContext*)callbackContext;
-
-
-
 @end
 
 NS_ASSUME_NONNULL_END

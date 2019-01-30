@@ -1,6 +1,6 @@
 #import "IronSourceAdsPlugin.h"
 //#import <Cordova/CDVViewController.h>
-
+#import "JsbCall.h"
 static NSString *const EVENT_INTERSTITIAL_LOADED = @"interstitialLoaded";
 static NSString *const EVENT_INTERSTITIAL_SHOWN = @"interstitialShown";
 static NSString *const EVENT_INTERSTITIAL_SHOW_FAILED = @"interstitialShowFailed";
@@ -36,16 +36,52 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
 
 @implementation IronSourceAdsPlugin
 
-#pragma mark - CDVPlugin
+#pragma mark - IronSourceAdsPlugin
+
+- (Boolean)exec : (NSString*) action : (NSDictionary*)args : (CallbackContext*)callbackContext{
+    NSLog(@"IronSourceAdsPlugin.exec: %@", action);
+
+    if([action isEqualToString: @"init"]){
+        [self initAction: args:callbackContext];
+    }else if([action isEqualToString: @"setDynamicUserId"]){
+        [self setDynamicUserId:args:callbackContext];
+    }else if([action isEqualToString: @"setConsent"]){
+        [self setConsent:args:callbackContext];
+    }else if([action isEqualToString: @"showRewardedVideo"]){
+        [self showRewardedVideo:args:callbackContext];
+    }else if([action isEqualToString: @"hasRewardedVideo"]){
+        [self hasRewardedVideo:args:callbackContext];
+    }else if([action isEqualToString: @"loadBanner"]){
+        [self loadBanner:args:callbackContext];
+    }else if([action isEqualToString: @"showBanner"]){
+        [self showBanner:args:callbackContext];
+    }else if([action isEqualToString: @"hideBanner"]){
+        [self hideBanner:args:callbackContext];
+//    }else if([action isEqualToString: @"destroyBanner"]){
+//        [self destroyBanner:args:callbackContext];
+    }else if([action isEqualToString: @"hasOfferwall"]){
+        [self hasOfferwall:args:callbackContext];
+    }else if([action isEqualToString: @"showOfferwall"]){
+        [self showOfferwall:args:callbackContext];
+    }else if([action isEqualToString: @"showInterstitial"]){
+        [self showInterstitial:args:callbackContext];
+    }else if([action isEqualToString: @"loadInterstitial"]){
+        [self loadInterstitial:args:callbackContext];
+    }else{
+        return false;
+    }
+    return true;
+}
+
 
 /**
  * Init
  * @params {CDVInvokedUrlCommand} command
  */
-- (void)init:(CDVInvokedUrlCommand *)command
+- (void)initAction : (NSDictionary *)args : (CallbackContext*)callbackContext
 {
-    NSString *appKey = [command argumentAtIndex:0];
-    NSString *userId = [command argumentAtIndex:1];
+    NSString *appKey = [args objectForKey:@"appKey"];
+    NSString *userId = [args objectForKey:@"userId"];
 
     [ISSupersonicAdsConfiguration configurations].useClientSideCallbacks = @(YES);
 
@@ -53,6 +89,10 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
     [IronSource setOfferwallDelegate:self];
     [IronSource setBannerDelegate:self];
     [IronSource setInterstitialDelegate:self];
+
+    NSLog(@"initWithKey....before....");
+    [IronSource initWithAppKey:appKey];
+    NSLog(@"initWithKey...end...");
 
     if ([userId length] == 0)
     {
@@ -69,61 +109,34 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
     // After setting the delegates you can go ahead and initialize the SDK.
     [IronSource setUserId:userId];
 
-    [IronSource initWithAppKey:appKey];
 
     // Send callback successfull
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    [callbackContext success];
 }
 
-- (void)setDynamicUserId:(CDVInvokedUrlCommand *)command
+- (void)setDynamicUserId : (NSDictionary *)args : (CallbackContext*)callbackContext
 {
-    NSString *userId = [command argumentAtIndex:0];
+    NSString *userId = [args objectForKey:@"userId"];
 
     [IronSource setDynamicUserId:userId];
 
     // Send callback successfull
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    [callbackContext success];
 }
 
-- (void)setConsent:(CDVInvokedUrlCommand *)command
+- (void)setConsent : (NSDictionary *)args :  (CallbackContext*)callbackContext
 {
-    BOOL consent = [command argumentAtIndex:0];
+    BOOL consent = [args objectForKey:@"consent"];
 
     [IronSource setConsent:consent];
 
     // Send callback successfull
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    [callbackContext success];
 }
 
-/**
- * Emit window event
- * @param {NString} - event name
- */
-- (void)emitWindowEvent:(NSString *)event
-{
-    NSString *js = [NSString stringWithFormat:@"cordova.fireWindowEvent('%@')", event];
-    [self.commandDelegate evalJs:js];
-}
 
-/**
- * Emits window event with data
- * @param {NSString} - event name
- * @param {NSDictionary} - event data
- */
-- (void)emitWindowEvent:(NSString *)event withData:(NSDictionary *)data
-{
-    NSError *error = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:&error];
 
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    NSString *js = [NSString stringWithFormat:@"cordova.fireWindowEvent('%@', %@)", event, jsonString];
-    [self.commandDelegate evalJs:js];
-}
-
-- (void)listSubviewsOfView:(UIView *)view {
+- (void)listSubviewsOfView : (UIView *)view {
 
     // Get the subviews of the view
     NSArray *subviews = [view subviews];
@@ -145,14 +158,13 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
  * Validates integration
  * @param {CDVInvokedUrlCommand} command
  */
-- (void)validateIntegration:(CDVInvokedUrlCommand *)command
+- (void)validateIntegration : (NSDictionary *)args : (CallbackContext*)callbackContext
 {
 
     [ISIntegrationHelper validateIntegration];
 
     // Send callback successfull
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    [callbackContext success];
 }
 
 #pragma mark - Rewarded Video Delegate Functions
@@ -161,22 +173,20 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
 /**
  * Checks for if rewarded video placement is capped
  */
-- (void)isRewardedVideoCappedForPlacement:(CDVInvokedUrlCommand *)command
+- (void)isRewardedVideoCappedForPlacement : (NSDictionary *)args : (CallbackContext*)callbackContext
 {
-    NSString *placement = [command argumentAtIndex:0];
+    NSString *placement = [args objectForKey:@"placement"];
     BOOL capped = [IronSource isRewardedVideoCappedForPlacement:placement];
 
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:capped];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    [callbackContext success];
 }
 
 
 /**
  * Show rewarded video
  */
-- (void)showRewardedVideo:(CDVInvokedUrlCommand *)command
-{
-    NSString *placement = [command argumentAtIndex:0];
+- (void)showRewardedVideo : (NSDictionary *)args : (CallbackContext*)callbackContext{
+    NSString *placement = [args objectForKey:@"placement"];
 
     if( placement == nil || [placement length] == 0)
     {
@@ -189,14 +199,13 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
 
 
     // Send callback successfull
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+   [callbackContext success];
 }
 
 // This method lets you know whether or not there is a video
 // ready to be presented. It is only after this method is invoked
 // with 'hasAvailableAds' set to 'YES' that you can should 'showRV'.
-- (void)rewardedVideoHasChangedAvailability:(BOOL)available
+- (void)rewardedVideoHasChangedAvailability : (BOOL)available
 {
 
     NSLog(@"rewardedVideoHasChangedAvailability: %s", available ? "true" : "false");
@@ -206,18 +215,17 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
                            @"available" : @(available)
                            };
 
-    [self emitWindowEvent:EVENT_REWARDED_VIDEO_AVAILABILITY_CHANGED withData:data];
+    [self emitWindowEvent : EVENT_REWARDED_VIDEO_AVAILABILITY_CHANGED withData : data];
 }
 
 // This method checks if rewarde video is available
-- (void)hasRewardedVideo:(CDVInvokedUrlCommand *)command
+- (void)hasRewardedVideo : (NSDictionary *)args : (CallbackContext*)callbackContext
 {
 
     BOOL available = [IronSource hasRewardedVideo];
 
     // Send callback successfull
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:available];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    [callbackContext success];
 }
 
 // This method gets invoked after the user has been rewarded.
@@ -233,13 +241,13 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
                                    }
                            };
 
-    [self emitWindowEvent:EVENT_REWARDED_VIDEO_REWARDED withData:data];
+    [self emitWindowEvent : EVENT_REWARDED_VIDEO_REWARDED withData : data];
 }
 
 // This method gets invoked when there is a problem playing the video.
 // If it does happen, check out 'error' for more information and consult
 // our knowledge center for help.
-- (void)rewardedVideoDidFailToShowWithError:(NSError *)error
+- (void)rewardedVideoDidFailToShowWithError : (NSError *)error
 {
 
     NSLog(@"%s", __PRETTY_FUNCTION__);
@@ -251,7 +259,7 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
                                    }
                            };
 
-    [self emitWindowEvent:EVENT_REWARDED_VIDEO_FAILED withData:data];
+    [self emitWindowEvent : EVENT_REWARDED_VIDEO_FAILED withData : data];
 }
 
 // This method gets invoked when we take control, but before
@@ -259,7 +267,7 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
 - (void)rewardedVideoDidOpen
 {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    [self emitWindowEvent:EVENT_REWARDED_VIDEO_OPENED];
+    [self emitWindowEvent : EVENT_REWARDED_VIDEO_OPENED];
 }
 
 // This method gets invoked when we return controlback to your hands.
@@ -268,14 +276,14 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
 - (void)rewardedVideoDidClose
 {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    [self emitWindowEvent:EVENT_REWARDED_VIDEO_CLOSED];
+    [self emitWindowEvent : EVENT_REWARDED_VIDEO_CLOSED];
 }
 
 // This method gets invoked when the video has started playing.
 - (void)rewardedVideoDidStart
 {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    [self emitWindowEvent:EVENT_REWARDED_VIDEO_STARTED];
+    [self emitWindowEvent : EVENT_REWARDED_VIDEO_STARTED];
 }
 
 // This method gets invoked when the video has stopped playing.
@@ -292,11 +300,11 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
 }
 
 
-- (void)loadBanner:(CDVInvokedUrlCommand *)command
+- (void)loadBanner : (NSDictionary *)args : (CallbackContext*)callbackContext
 {
-    NSString *placement = [command argumentAtIndex:0];
-    NSString *size = [command argumentAtIndex:1];
-    NSString *position = [command argumentAtIndex:2];
+    NSString *placement = [args objectForKey:@"placement"];
+    NSString *size = [args objectForKey:@"size"];
+    NSString *position = [args objectForKey:@"position"];
     ISBannerSize *adSize = ISBannerSize_SMART;
 
     // We call destroy banner before loading a new banner
@@ -329,14 +337,13 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
     }
 
     // Send callback successfull
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    [callbackContext success];
 }
 
 #pragma mark - Banner Delegate Functions
 
 // Show banner
-- (void)showBanner:(CDVInvokedUrlCommand *)command
+- (void)showBanner : (NSDictionary *)args : (CallbackContext*)callbackContext
 {
     if(self.bannerView)
     {
@@ -345,11 +352,10 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
     }
 
     // Send callback successfull
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    [callbackContext success];
 }
 
-- (void)hideBanner:(CDVInvokedUrlCommand *)command
+- (void)hideBanner : (NSDictionary *)args : (CallbackContext*)callbackContext
 {
     if(self.bannerView)
     {
@@ -357,8 +363,7 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
     }
 
     // Send callback successfull
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    [callbackContext success];
 }
 
 - (void)destroyBanner
@@ -373,11 +378,11 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
 - (void)bannerDidDismissScreen
 {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    [self emitWindowEvent:EVENT_BANNER_DID_DISMISS_SCREEN];
+    [self emitWindowEvent : EVENT_BANNER_DID_DISMISS_SCREEN];
 }
 
 //
-- (void)bannerDidFailToLoadWithError:(NSError *)error
+- (void)bannerDidFailToLoadWithError : (NSError *)error
 {
 
     NSLog(@"%s", __PRETTY_FUNCTION__);
@@ -397,10 +402,10 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
     [self listSubviewsOfView:self.bannerController.view];
 
 
-    [self emitWindowEvent:EVENT_BANNER_FAILED_TO_LOAD withData:data];
+    [self emitWindowEvent : EVENT_BANNER_FAILED_TO_LOAD withData:data];
 }
 
-- (void)bannerDidLoad:(ISBannerView *)bannerView
+- (void)bannerDidLoad : (ISBannerView *)bannerView
 {
     // We call destroy banner before loading a new banner
     if (self.bannerView) {
@@ -465,20 +470,21 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
 #pragma mark - Offerwall Delegate Functions
 
 // This method checks if rewarde video is available
-- (void)hasOfferwall:(CDVInvokedUrlCommand *)command
+- (void)hasOfferwall : (NSDictionary *)args : (CallbackContext*)callbackContext
 {
 
     BOOL available = [IronSource hasOfferwall];
-
+    NSDictionary *data = @{
+                           @"available" : @(available)
+                           };
     // Send callback successfull
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:available];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    [callbackContext success : data];
 }
 
-- (void)showOfferwall:(CDVInvokedUrlCommand *)command
+- (void)showOfferwall : (NSDictionary *)args : (CallbackContext*)callbackContext
 {
 
-    NSString *placement = [command argumentAtIndex:0];
+    NSString *placement = [args objectForKey:@"placement"];
 
     if( placement == nil || [placement length] == 0)
     {
@@ -490,8 +496,7 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
     }
 
     // Send callback successfull
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    [callbackContext success];
 }
 
 - (void)didFailToReceiveOfferwallCreditsWithError:(NSError *)error
@@ -506,13 +511,13 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
                                    }
                            };
 
-    [self emitWindowEvent:EVENT_OFFERWALL_CREDIT_FAILED withData:data];
+    [self emitWindowEvent : EVENT_OFFERWALL_CREDIT_FAILED withData:data];
 }
 
 - (BOOL)didReceiveOfferwallCredits:(NSDictionary *)creditInfo
 {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    [self emitWindowEvent:EVENT_OFFERWALL_CREDITED withData:creditInfo];
+    [self emitWindowEvent : EVENT_OFFERWALL_CREDITED withData : creditInfo];
     return YES;
 }
 
@@ -533,7 +538,7 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
                                    }
                            };
 
-    [self emitWindowEvent:EVENT_OFFERWALL_CREDIT_FAILED withData:data];
+    [self emitWindowEvent : EVENT_OFFERWALL_CREDIT_FAILED withData:data];
 }
 
 - (void)offerwallDidShow
@@ -555,31 +560,34 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
 
 #pragma mark - Intersitial Delegate Functions
 
-- (void)hasInterstitial:(CDVInvokedUrlCommand *)command
+- (void)hasInterstitial : (NSDictionary *)args : (CallbackContext*)callbackContext
 {
 
     BOOL available = [IronSource hasInterstitial];
 
+
+    NSDictionary *data = @{
+                           @"available" : @(available)
+                           };
+
     // Send callback successfull
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:available];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    [callbackContext success:data];
 }
 
-- (void)loadInterstitial:(CDVInvokedUrlCommand *)command
+- (void)loadInterstitial : (NSDictionary *)args : (CallbackContext*)callbackContext
 {
 
     NSLog(@"%s", __PRETTY_FUNCTION__);
     [IronSource loadInterstitial];
 
     // Send callback successfull
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    [callbackContext success];
 }
 
-- (void)showInterstitial:(CDVInvokedUrlCommand *)command
+- (void)showInterstitial:(NSDictionary *)args :  (CallbackContext*)callbackContext
 {
 
-    NSString *placement = [command argumentAtIndex:0];
+    NSString *placement = [args objectForKey:@"placement"];
 
     if( placement == nil || [placement length] == 0)
     {
@@ -591,8 +599,7 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
     }
 
     // Send callback successfull
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    [callbackContext success];
 }
 
 - (void)didClickInterstitial

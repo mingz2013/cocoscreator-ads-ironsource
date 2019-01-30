@@ -7,35 +7,38 @@
 
 @property(nonatomic, strong) ISBannerView *bannerView;
 @property(nonatomic) bool loadingBanner;
-@property(nonatomic) NSString *bannerPosition;
-@property(nonatomic) UIViewController *bannerController;
+@property(nonatomic, strong) NSString *bannerPosition;
+@property(nonatomic, strong) UIViewController *bannerController;
 
-- (void)init:(CDVInvokedUrlCommand *)command;
+- (Boolean)exec : (NSString*) action : (NSDictionary*)args : (CallbackContext*)callbackContext;
 
-- (void)setDynamicUserId:(CDVInvokedUrlCommand *)command;
 
-- (void)setConsent:(CDVInvokedUrlCommand *)command;
+- (void)initAction : (NSDictionary *)args : (CallbackContext*)callbackContext;
 
-- (void)validateIntegration:(CDVInvokedUrlCommand *)command;
+- (void)setDynamicUserId : (NSDictionary *)args : (CallbackContext*)callbackContext;
 
-- (void)showRewardedVideo:(CDVInvokedUrlCommand *)command;
+- (void)setConsent : (NSDictionary *)args : (CallbackContext*)callbackContext;
 
-- (void)hasRewardedVideo:(CDVInvokedUrlCommand *)command;
+- (void)validateIntegration : (NSDictionary *)args : (CallbackContext*)callbackContext;
 
-- (void)loadBanner:(CDVInvokedUrlCommand *)command;
+- (void)showRewardedVideo : (NSDictionary *)args : (CallbackContext*)callbackContext;
 
-- (void)showBanner:(CDVInvokedUrlCommand *)command;
+- (void)hasRewardedVideo : (NSDictionary *)args : (CallbackContext*)callbackContext;
 
-- (void)hideBanner:(CDVInvokedUrlCommand *)command;
+- (void)loadBanner : (NSDictionary *)args : (CallbackContext*)callbackContext;
 
-- (void)showOfferwall:(CDVInvokedUrlCommand *)command;
+- (void)showBanner : (NSDictionary *)args : (CallbackContext*)callbackContext;
 
-- (void)hasOfferwall:(CDVInvokedUrlCommand *)command;
+- (void)hideBanner : (NSDictionary *)args : (CallbackContext*)callbackContext;
 
-- (void)loadInterstitial:(CDVInvokedUrlCommand *)command;
+- (void)showOfferwall : (NSDictionary *)args : (CallbackContext*)callbackContext;
 
-- (void)hasInterstitial:(CDVInvokedUrlCommand *)command;
+- (void)hasOfferwall : (NSDictionary *)args : (CallbackContext*)callbackContext;
 
-- (void)showInterstitial:(CDVInvokedUrlCommand *)command;
+- (void)loadInterstitial : (NSDictionary *)args : (CallbackContext*)callbackContext;
+
+- (void)hasInterstitial : (NSDictionary *)args : (CallbackContext*)callbackContext;
+
+- (void)showInterstitial : (NSDictionary *)args : (CallbackContext*)callbackContext;
 
 @end

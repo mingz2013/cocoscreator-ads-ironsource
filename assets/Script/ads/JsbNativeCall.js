@@ -48,7 +48,7 @@ var JsbNativeCall = (function () {
 
     function getCallBackId() {
         _callbackId++;
-        return _callbackId;
+        return _callbackId + "";
     }
 
 
@@ -65,7 +65,17 @@ var JsbNativeCall = (function () {
 
     function _exec(service, action, params, callbackId) {
         cc.log("JsbnativeCall", "_exec", service, action, params, callbackId);
-        jsb.reflection.callStaticMethod("me.mingz.ads.JsbCall", "exec", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V", service, action, params, callbackId);
+
+        if (cc.sys.os === cc.sys.OS_IOS) {
+            cc.log("JsbnativeCall", "_exec", "ios call...");
+            jsb.reflection.callStaticMethod("JsbCall", "exec:withAction:withParams:withCallbackId:", service, action, params, callbackId);
+
+        } else if (cc.sys.os === cc.sys.OS_ANDROID) {
+            jsb.reflection.callStaticMethod("me.mingz.ads.JsbCall", "exec", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V", service, action, params, callbackId);
+
+        } else {
+            cc.log("JsbnativeCall", "_exec", "os error....");
+        }
 
     }
 
