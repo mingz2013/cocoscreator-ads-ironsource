@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.xiuxayo.els1010"
-          android:installLocation="auto">
+    package="com.xiuxayo.els1010"
+    android:installLocation="auto">
 
     <uses-feature android:glEsVersion="0x00020000" />
 
@@ -18,7 +18,21 @@
         <!-- Tell Cocos2dxActivity the name of our .so -->
         <meta-data android:name="android.app.lib_name"
                    android:value="cocos2djs" />
-        
+        <activity
+                android:name="me.mingz.SplashActivity"
+                android:screenOrientation="portrait"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:label="@string/app_name"
+                android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+                android:launchMode="singleTask"
+                android:taskAffinity="" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
                 android:name="org.cocos2dx.javascript.AppActivity"
                 android:screenOrientation="portrait"
@@ -27,15 +41,14 @@
                 android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
                 android:launchMode="singleTask"
                 android:taskAffinity="">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
 
-        <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
-                   android:value="ca-app-pub-3180535698853578~4286818547"/>
+        <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-3180535698853578~4286818547"/>
 
         <!--<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>-->
 
