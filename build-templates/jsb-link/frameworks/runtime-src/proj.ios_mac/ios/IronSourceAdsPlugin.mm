@@ -67,7 +67,11 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
         [self showInterstitial:args:callbackContext];
     }else if([action isEqualToString: @"loadInterstitial"]){
         [self loadInterstitial:args:callbackContext];
+    }else if([action isEqualToString: @"hasInterstitial"]){
+        [self hasInterstitial:args :callbackContext];
     }else{
+
+        NSLog(@"IronSourceAdsPlugin.exec, Unknown action: %s", action);
         return false;
     }
     return true;
@@ -576,6 +580,7 @@ static NSString *const EVENT_BANNER_WILL_LEAVE_APPLICATION = @"bannerWillLeaveAp
                            @"available" : @(available)
                            };
 
+    NSLog(@"IronSourceAdsPlugin hasInterstitial %s", available? "true" : "false");
     // Send callback successfull
     [callbackContext success:data];
 }

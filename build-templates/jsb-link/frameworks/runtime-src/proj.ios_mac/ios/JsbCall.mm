@@ -52,7 +52,8 @@
 
     std::string jsCallStr = cocos2d::StringUtils::format("window.JsbNativeCall.emitWindowEvent('%s', '%s');",[event UTF8String], [dataStr UTF8String]);
     
-    
+    NSLog(@"JsbCall.emitWindowEvent: %s", jsCallStr.c_str());
+
     se::ScriptEngine* se = se::ScriptEngine::getInstance();
     se->evalString(jsCallStr.c_str());
 }
@@ -65,6 +66,8 @@
     std::string jsCallStr = cocos2d::StringUtils::format("window.JsbNativeCall.callBackCallSuccess('%s', '%s');",[callbackId UTF8String], [dataStr UTF8String]);
     
     
+    NSLog(@"JsbCall.successCall: %s", jsCallStr.c_str());
+
     se::ScriptEngine* se = se::ScriptEngine::getInstance();
     se->evalString(jsCallStr.c_str());
 }
@@ -73,7 +76,8 @@
     NSString *dataStr = [[NSString alloc] initWithData : jsonData encoding : NSUTF8StringEncoding];
     std::string jsCallStr = cocos2d::StringUtils::format("window.JsbNativeCall.callBackCallFailure('%s', '%s');",[callbackId UTF8String], [dataStr UTF8String]);
     
-    
+    NSLog(@"JsbCall.failureCall: %s", jsCallStr.c_str());
+
     se::ScriptEngine* se = se::ScriptEngine::getInstance();
     se->evalString(jsCallStr.c_str());
 }
